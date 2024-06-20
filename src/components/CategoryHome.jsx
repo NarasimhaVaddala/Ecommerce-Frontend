@@ -1,7 +1,7 @@
 import React from 'react'
 import "../styles/sections-home.css"
 import HomeCards from './HomeCards'
-export default function Womenhome(props) {
+export default function CategoryHome(props) {
   let {title, list} = props;
   return (
     <section>
