@@ -1,0 +1,28 @@
+/** Header Section */
+header .container{  padding: 1rem 6rem;}
+nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+
+  & #logo{
+    font-weight: 800;
+    font-size: x-large;
+
+
+    &:hover{
+      scale: 1.2;
+    }
+  }
+}
+.nav-list{
+  display: flex;
+  align-items: center;
+
+
+  & li{
+    margin: 0 1rem;
+  }
+
+}
