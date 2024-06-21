@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/carousel.css"
+import "./carousel.css"
 export default function Carousel() {
   return (
     <section className='carousel'>

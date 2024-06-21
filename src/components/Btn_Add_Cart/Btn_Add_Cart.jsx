@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/Addtocart-btn.css"
+import "./Addtocart-btn.css"
 export default function Btn_Add_Cart() {
   return (
     <button className='add-cart-btn'>

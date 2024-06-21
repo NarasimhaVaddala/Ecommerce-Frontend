@@ -1,6 +1,6 @@
 import React from 'react'
-import "../styles/sections-home.css"
-import HomeCards from './HomeCards'
+import "./sections-home.css"
+import HomeCards from '../HomeCards/HomeCards'
 export default function CategoryHome(props) {
   let {title, list} = props;
   return (

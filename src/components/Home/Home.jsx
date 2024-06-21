@@ -1,7 +1,7 @@
 import React from 'react'
 import Carousel from './Carousel'
-import CategoryHome from './CategoryHome'
-import HomeCards from './HomeCards'
+import CategoryHome from '../CategoryHome/CategoryHome'
+import HomeCards from '../HomeCards/HomeCards'
 
 export default function Home() {
 
@@ -80,7 +80,7 @@ export default function Home() {
 
       <CategoryHome title="Women" list={women}/>
 
-      <CategoryHome title="kids" list={kids}/>
+      <CategoryHome title="kid" list={kids}/>
 
     </>
   )

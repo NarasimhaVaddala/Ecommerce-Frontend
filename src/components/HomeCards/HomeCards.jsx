@@ -1,5 +1,5 @@
 import React from 'react'
-import "../styles/Homecards.css"
+import "./Homecards.css"
 export default function HomeCards(props) {
   const {imgurl , category, price } = props;
   return (
