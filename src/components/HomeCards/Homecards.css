@@ -22,7 +22,7 @@
 
     & .textbox{
         margin: 2rem ;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 600;
     }
 
@@ -31,7 +31,7 @@
 
 
 .homecard:hover{
-    scale: 1.09;
+    scale: 1.05;
 }
 
 

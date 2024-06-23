@@ -7,12 +7,12 @@ export default function Home() {
   const men = [
     {
       imgurl: "https://images.bewakoof.com/t1080/men-s-black-deadpool-duo-graphic-printed-oversized-t-shirt-644743-1718287838-1.jpg",
-      category: "shirts",
+      category: "top Wear",
       price: "799"
     },
     {
       imgurl: "https://images.bewakoof.com/t640/men-s-jet-black-slim-fit-cargo-jeans-629591-1705469180-1.JPG",
-      category: "trousers",
+      category: "bottom Wear",
       price: "999"
     },
     {
@@ -30,17 +30,17 @@ export default function Home() {
   const women = [
     {
       imgurl: "https://images.bewakoof.com/t640/women-s-black-graphic-printed-slim-fit-short-top-627787-1718703250-1.jpg",
-      category: "tops",
+      category: "top wear",
       price: "599"
     },
     {
       imgurl: "https://images.bewakoof.com/t640/women-s-grey-super-loose-fit-joggers-624641-1710767506-1.jpg",
-      category: "trousers",
+      category: "bottom wear",
       price: "799"
     },
     {
       imgurl: "https://images.bewakoof.com/t640/women-s-dark-blue-denim-shorts-642604-1717762395-1.JPG",
-      category: "shorts",
+      category: "inners",
       price: "299"
     },
     {
@@ -80,6 +80,8 @@ export default function Home() {
       <CategoryHome title="women" list={women}/>
 
       <CategoryHome title="kid" list={kids}/>
+
+
 
     </>
   )

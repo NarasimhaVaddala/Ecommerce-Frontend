@@ -9,7 +9,7 @@ export default function ProductCard() {
 
 
             <p className="textbox capitalise" >
-                <span>Rs. 299/-</span>
+                <span>₹ <strong>299/-</strong></span>
                 <span><i className="fa-regular fa-heart" ></i></span>
             </p>
             <button class="cart-btn">
