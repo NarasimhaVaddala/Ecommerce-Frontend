@@ -1,29 +1,28 @@
 import React from 'react'
-import Carousel from './Carousel'
+import Carousel from '../Carousel/Carousel'
 import CategoryHome from '../CategoryHome/CategoryHome'
-import HomeCards from '../HomeCards/HomeCards'
 
 export default function Home() {
 
   const men = [
     {
       imgurl: "https://images.bewakoof.com/t1080/men-s-black-deadpool-duo-graphic-printed-oversized-t-shirt-644743-1718287838-1.jpg",
-      category: "Shirts",
+      category: "shirts",
       price: "799"
     },
     {
       imgurl: "https://images.bewakoof.com/t640/men-s-jet-black-slim-fit-cargo-jeans-629591-1705469180-1.JPG",
-      category: "Trousers",
+      category: "trousers",
       price: "999"
     },
     {
       imgurl: "https://images.bewakoof.com/t640/men-s-multicolor-all-over-printed-boxers-570834-1683281572-1.JPG",
-      category: "Inners",
+      category: "inners",
       price: "299"
     },
     {
       imgurl: "https://images.bewakoof.com/t1080/men-s-green-black-kakashi-color-block-high-top-sneakers-630679-1718781621-1.jpg",
-      category: "Footwear",
+      category: "footwear",
       price: "1899"
     },
 
@@ -31,22 +30,22 @@ export default function Home() {
   const women = [
     {
       imgurl: "https://images.bewakoof.com/t640/women-s-black-graphic-printed-slim-fit-short-top-627787-1718703250-1.jpg",
-      category: "Tops",
+      category: "tops",
       price: "599"
     },
     {
       imgurl: "https://images.bewakoof.com/t640/women-s-grey-super-loose-fit-joggers-624641-1710767506-1.jpg",
-      category: "Trousers",
+      category: "trousers",
       price: "799"
     },
     {
       imgurl: "https://images.bewakoof.com/t640/women-s-dark-blue-denim-shorts-642604-1717762395-1.JPG",
-      category: "Shorts",
+      category: "shorts",
       price: "299"
     },
     {
       imgurl: "https://images.bewakoof.com/t640/heat-waves-velcro-womens-sliders-608110-1698922949-1.jpg",
-      category: "Footwear",
+      category: "footwear",
       price: "1899"
     },
 
@@ -56,17 +55,17 @@ export default function Home() {
     
     {
       imgurl:"https://images.pexels.com/photos/1619801/pexels-photo-1619801.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category:"Boy's",
+      category:"boys",
       price:"799"
     },
     {
       imgurl:"https://images.pexels.com/photos/1493108/pexels-photo-1493108.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category:"Girls",
+      category:"girls",
       price:"799"
     },
     {
       imgurl:"https://images.pexels.com/photos/2533323/pexels-photo-2533323.jpeg?auto=compress&cs=tinysrgb&w=600",
-      category:"Babies",
+      category:"babies",
       price:"399"
     }
   ]
@@ -76,9 +75,9 @@ export default function Home() {
       <Carousel />
 
 
-      <CategoryHome title="Men" list={men}/>
+      <CategoryHome title="men" list={men}/>
 
-      <CategoryHome title="Women" list={women}/>
+      <CategoryHome title="women" list={women}/>
 
       <CategoryHome title="kid" list={kids}/>
 

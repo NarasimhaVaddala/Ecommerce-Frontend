@@ -71,6 +71,16 @@ h1,h2,h3,h4,h5,h6{
  
 }
 
+
+.capitalise{
+  text-transform: capitalize;
+}
+
+
+.fa-heart:hover{
+  color: red;
+}
+
 @media (width < 1050px) {
 
   html{
@@ -95,13 +105,49 @@ h1,h2,h3,h4,h5,h6{
     grid-template-columns: repeat(2 , 1fr);
   }
 
-  .homecard{
+  .homecard , .productcard{
     height: auto;
     width: auto;
 }
 }
 
+.cart-btn {
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid black;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-weight: bold;
+  background: transparent;
+  position: relative;
+  transition: all 1s;
+  overflow: hidden;
+  cursor:pointer;
 
+  width: 100%;
+}
+
+.cart-btn:hover {
+  color: white;
+}
+
+.cart-btn::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  top: 0;
+  left: -40px;
+  transform: skewX(45deg);
+  background-color: black;
+  z-index: -1;
+  transition: all 1s;
+}
+
+.cart-btn:hover::before {
+  width: 160%;
+}
 
 
 @media (width < 576px) {

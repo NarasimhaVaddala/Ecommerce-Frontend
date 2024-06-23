@@ -12,7 +12,7 @@ export default function CategoryHome(props) {
       <div className="container section-home">
 
         <div className="section-common-box">
-          <h1 className='section-common--heading'>{title}'s Clothing</h1>
+          <h1 className='section-common--heading capitalise'>{title}'s Clothing</h1>
           <p className='section-common--subheading'>Shop On Wide range of Products for {title}</p>
        </div>
 
@@ -21,7 +21,7 @@ export default function CategoryHome(props) {
             {
               list.map((e)=>{
                
-                return <HomeCards key={e.category} imgurl={e.imgurl} category={e.category} price={e.price} />
+                return <HomeCards key={e.category} imgurl={e.imgurl} category={e.category} price={e.price} title={title} />
               })
             }
        </div>
