@@ -32,6 +32,8 @@
     border-color: #2260ff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     color: #2260ff;
+    
+    border: 2px solid #000000;
   }
   
   .radio-input:checked + .radio-tile:before {
@@ -47,10 +49,18 @@
   
   .radio-input:checked + .radio-tile .radio-label {
     color: #2260ff;
+    
+    
+  }
+
+  .radio-input:checked{
+
   }
   
   .radio-input:focus + .radio-tile {
     border-color: #2260ff;
+    
+    border: 2px solid #000000;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
   }
   
@@ -68,7 +78,7 @@
     
     min-height: 50px;
     border-radius: 0.5rem;
-    border: 2px solid #b5bfd9;
+    border: 1px solid #000000;
     background-color: #fff;
     transition: 0.15s ease;
     cursor: pointer;
@@ -101,7 +111,7 @@
   }
   
   .radio-label {
-    color: #707070;
+    color: #000000;
     transition: 0.375s ease;
     text-align: center;
     font-size: 13px;
@@ -135,7 +145,7 @@
   .btn-group{
     display: flex;
     gap: 1rem;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
   }
 
 
@@ -170,3 +180,51 @@
     margin-right: 1rem;
   }
 
+
+  .add-to-wishlist{
+    border-color: green !important;
+    color: green !important;
+
+    &:hover{
+        color: white !important;
+    }
+}
+
+.return-exchange{
+  display: flex;
+  margin: 1rem 0;
+  gap: 1rem;
+  & p{
+    
+    font-size: 1.4rem;
+  
+  }
+}
+
+
+.secure-info{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+
+
+  & div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    & p{
+    
+      font-size: 1.2rem;
+      text-align: center;
+      margin: 1rem 0;
+      
+    
+    }
+    & i{
+      font-size: 3.5rem;
+
+    }
+  }
+}

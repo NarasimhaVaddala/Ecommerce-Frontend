@@ -2,7 +2,7 @@ import React from 'react'
 import "./DetailedProductView.css"
 export default function DetailedProductView() {
 
-    
+
     return (
         <>
 
@@ -35,8 +35,10 @@ export default function DetailedProductView() {
                                 </span>
                             </label>
 
+                           
+
                             <label>
-                                <input checked="" class="radio-input" type="radio" name="engine" />
+                                <input class="radio-input" type="radio" name="engine" />
                                 <span class="radio-tile">
                                     <span class="radio-icon">
 
@@ -44,7 +46,6 @@ export default function DetailedProductView() {
                                     <span class="radio-label">M</span>
                                 </span>
                             </label>
-
                             <label>
                                 <input class="radio-input" type="radio" name="engine" />
                                 <span class="radio-tile">
@@ -75,24 +76,67 @@ export default function DetailedProductView() {
                                 </span>
                             </label>
 
+
                         </div>
 
 
                         <div className="btn-group">
-                            <button class="cart-btn">
-                            <i class="fa-solid fa-bag-shopping"></i>   Add To CART
+                            <button class="cart-btn ">
+                                <i class="fa-solid fa-bag-shopping"></i>   Add To CART
                             </button>
 
-                            <button class="cart-btn">
-                            <i class="fa-regular fa-heart"></i>  Add To Wishlist
+                            <button class="cart-btn add-to-wishlist">
+                                <i class="fa-regular fa-heart"></i>  Add To Wishlist
                             </button>
+                        </div>
+
+                        <hr />
+
+                        <div className="return-exchange">
+                            <img src="https://images.bewakoof.com/web/ic-star-offer.svg" alt="return" />
+                            <div>
+
+                                <p>100% Pure Cotton</p>
+                                <p>Best In This Price Segment</p>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div className="return-exchange">
+                            <img src="https://images.bewakoof.com/web/ic-return.svg" alt="return" />
+                            <div>
+
+                                <p>15 Days Return and Exchange</p>
+                                <p>Know More about return policy | contact us</p>
+                            </div>
+                        </div>
+
+                        <hr />
+
+
+
+                        <div className="secure-info">
+                            <div >
+                            <i class="fa-solid fa-shield-cat"></i>
+                                 <p>Secure <br /> Payments</p>
+                            </div>
+                            <div >
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                                <p>Instant <br /> Refuds</p>
+                            </div>
+                            <div ><i class="fa-regular fa-circle-check"></i>
+                                <p>100% <br /> Genuine product</p>
+                            </div>
                         </div>
 
                     </div>
 
 
 
+
                 </div>
+
 
 
             </div>

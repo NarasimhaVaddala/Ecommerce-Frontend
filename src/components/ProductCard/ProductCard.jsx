@@ -1,8 +1,10 @@
 import React from 'react'
 import "./ProductCard.css"
+import { Link } from 'react-router-dom'
 
 export default function ProductCard() {
     return (
+        <Link to="/productview">
         <div className='productcard'>
 
             <img src="https://images.bewakoof.com/t640/women-s-black-graphic-printed-slim-fit-short-top-627787-1718703250-1.jpg" alt="" />
@@ -12,11 +14,13 @@ export default function ProductCard() {
                 <span>₹ <strong>299/-</strong></span>
                 <span><i className="fa-regular fa-heart" ></i></span>
             </p>
-            <button class="cart-btn">
-                Add To CART
-            </button>
+
+            
+            
 
 
         </div>
+
+        </Link>
     )
 }
