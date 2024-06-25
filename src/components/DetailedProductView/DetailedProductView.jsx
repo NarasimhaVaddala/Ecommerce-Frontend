@@ -1,9 +1,20 @@
 import React from 'react'
 import "./DetailedProductView.css"
+import { useNavigate } from 'react-router-dom'
 export default function DetailedProductView() {
 
 
+    const navigate = useNavigate()
+
+    const AddtoCart = ()=>{
+        return navigate('/cart')
+    }
+    
+    
     return (
+
+
+
         <>
 
             <div className="container ">
@@ -24,55 +35,55 @@ export default function DetailedProductView() {
 
                         <h2>Select Size</h2>
 
-                        <div class="radio-inputs">
+                        <div className="radio-inputs">
 
                             <label>
-                                <input class="radio-input" type="radio" name="engine" />
-                                <span class="radio-tile">
-                                    <span class="radio-icon">
+                                <input className="radio-input"  type="radio" name="size" />
+                                <span className="radio-tile">
+                                    <span className="radio-icon">
                                     </span>
-                                    <span class="radio-label">S</span>
+                                    <span className="radio-label">S</span>
                                 </span>
                             </label>
 
                            
 
                             <label>
-                                <input class="radio-input" type="radio" name="engine" />
-                                <span class="radio-tile">
-                                    <span class="radio-icon">
+                                <input className="radio-input" type="radio" name="size" />
+                                <span className="radio-tile">
+                                    <span className="radio-icon">
 
                                     </span>
-                                    <span class="radio-label">M</span>
+                                    <span className="radio-label">M</span>
                                 </span>
                             </label>
                             <label>
-                                <input class="radio-input" type="radio" name="engine" />
-                                <span class="radio-tile">
-                                    <span class="radio-icon">
+                                <input className="radio-input" type="radio" name="size" />
+                                <span className="radio-tile">
+                                    <span className="radio-icon">
 
                                     </span>
-                                    <span class="radio-label">L</span>
-                                </span>
-                            </label>
-                            <label>
-
-                                <input class="radio-input" type="radio" name="engine" />
-                                <span class="radio-tile">
-                                    <span class="radio-icon">
-
-                                    </span>
-                                    <span class="radio-label">XL</span>
+                                    <span className="radio-label">L</span>
                                 </span>
                             </label>
                             <label>
 
-                                <input class="radio-input" type="radio" name="engine" />
-                                <span class="radio-tile">
-                                    <span class="radio-icon">
+                                <input className="radio-input" type="radio" name="size" />
+                                <span className="radio-tile">
+                                    <span className="radio-icon">
 
                                     </span>
-                                    <span class="radio-label">XXL</span>
+                                    <span className="radio-label">XL</span>
+                                </span>
+                            </label>
+                            <label>
+
+                                <input className="radio-input" type="radio" name="size" />
+                                <span className="radio-tile">
+                                    <span className="radio-icon">
+
+                                    </span>
+                                    <span className="radio-label">XXL</span>
                                 </span>
                             </label>
 
@@ -81,12 +92,13 @@ export default function DetailedProductView() {
 
 
                         <div className="btn-group">
-                            <button class="cart-btn ">
-                                <i class="fa-solid fa-bag-shopping"></i>   Add To CART
+                            <button className="cart-btn" onClick={AddtoCart}>
+                                <i className="fa-solid fa-bag-shopping"></i>   Add To CART
                             </button>
+                           
 
-                            <button class="cart-btn add-to-wishlist">
-                                <i class="fa-regular fa-heart"></i>  Add To Wishlist
+                            <button className="cart-btn add-to-wishlist">
+                                <i className="fa-regular fa-heart"></i>  Add To Wishlist
                             </button>
                         </div>
 
@@ -118,14 +130,14 @@ export default function DetailedProductView() {
 
                         <div className="secure-info">
                             <div >
-                            <i class="fa-solid fa-shield-cat"></i>
+                            <i className="fa-solid fa-shield-cat"></i>
                                  <p>Secure <br /> Payments</p>
                             </div>
                             <div >
-                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                            <i className="fa-solid fa-hand-holding-dollar"></i>
                                 <p>Instant <br /> Refuds</p>
                             </div>
-                            <div ><i class="fa-regular fa-circle-check"></i>
+                            <div ><i className="fa-regular fa-circle-check"></i>
                                 <p>100% <br /> Genuine product</p>
                             </div>
                         </div>

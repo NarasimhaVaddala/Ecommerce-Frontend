@@ -12,7 +12,12 @@ export default function ProductCard() {
 
             <p className="textbox capitalise" >
                 <span>₹ <strong>299/-</strong></span>
+                
                 <span><i className="fa-regular fa-heart" ></i></span>
+            </p>
+
+            <p className='textbox capitalise'>
+                Black Tshirt
             </p>
 
             
