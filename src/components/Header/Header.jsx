@@ -13,8 +13,8 @@ export default function Header() {
 
                 <ul className='nav-list'>
                     <li><Link to='/'><i className="fa-solid fa-house"></i></Link></li>
-                    <li><Link to='/'><i className="fa-regular fa-circle-user"></i></Link></li>
-                    <li><Link to='/'><i className="fa-solid fa-cart-shopping"></i></Link></li>
+                    <li><Link to='/profile'><i className="fa-regular fa-circle-user"></i></Link></li>
+                    <li><Link to='/cart'><i className="fa-solid fa-cart-shopping"></i></Link></li>
                 </ul>
         </nav>
 

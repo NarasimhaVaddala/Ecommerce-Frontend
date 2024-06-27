@@ -7,24 +7,35 @@ import ProductList from './components/ProductList/ProductList'
 
 import DetailedProductView from './components/DetailedProductView/DetailedProductView'
 import CartPage from './components/CartPage/CartPage'
+import Profile from './components/Profile/Profile'
 
 export default function () {
   return (
     <>
-        <Header/>
+      <Header />
 
-        <Routes>
+      <Routes>
 
-    <Route path='/' element={<Home/>} />
-    <Route path='/loader' element={<Loader/>} />
-    <Route path='/products/:title/:category' element={<ProductList/>} />
-    <Route path='/productView' element={<DetailedProductView/>} />
+        <Route path='/' element={<Home />} />
+        <Route path='/loader' element={<Loader />} />
+        <Route path='/products/:title/:category' element={<ProductList />} />
+        <Route path='/productView' element={<DetailedProductView />} />
 
-    <Route path='/cart' element={<CartPage/>} />
+        <Route path='/cart' element={<CartPage />} />
 
-        </Routes>
 
-  
+
+
+
+
+
+
+
+        <Route path="/profile/*" element={<Profile />} />
+
+      </Routes>
+
+
     </>
   )
 }

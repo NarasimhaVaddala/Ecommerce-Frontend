@@ -5,9 +5,9 @@ export default function CartPage() {
         <>
             <div className='cart-page container grid grid-three--cols'>
 
-                <Addressbox/>
+                <Addressbox />
 
-               
+
                 <Cartcard />
                 <Cartcard />
                 <Cartcard />
@@ -45,6 +45,9 @@ function Cartcard() {
 
                     <h2 className="price">Rs. 1799</h2>
 
+
+                    <p className='cart-desc btn-group'>Remove Item <i class="fa-regular fa-trash-can"></i> | Add to Wishlist <i class="fa-regular fa-heart"></i></p>
+
                 </div>
             </div>
 
@@ -75,20 +78,20 @@ function Pricebox() {
 }
 
 
-function Addressbox(){
+function Addressbox() {
 
     return (
-    <div className="addresscard">
-        <div>
-        <h3>Deliver To Narasimha</h3>
-        <p>Plot Number 474 hmt swarnapuri Colont , Miyapur , Hyderabad, Telangana</p>
-        <p>500049</p>
-        </div>
+        <div className="addresscard">
+            <div>
+                <h2>Deliver To Narasimha | +91 8978106223</h2>
+                <p>Plot Number 474 hmt swarnapuri Colont , Miyapur , Hyderabad, Telangana</p>
+                <p>500049</p>
+            </div>
 
-        <button className="cart-btn add-to-wishlist">
+            <button className="cart-btn add-to-wishlist">
                 Edit or Change Address
             </button>
 
 
-    </div>)
+        </div>)
 }

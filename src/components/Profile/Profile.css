@@ -1,0 +1,162 @@
+
+.profile {
+  display: grid;
+  gap: 1rem;
+}
+
+.username {
+  background-color: #fff;
+  padding: 2rem;
+  text-align: center;
+  position: sticky;
+  top: 1rem;
+
+  
+}
+
+.sidebox {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  /* Place the sidebox in the second row */
+  background-color: #fff;
+
+  position: sticky;
+  top: calc(1rem + 70px);
+}
+
+.sidebox a {
+  padding: 2rem;
+}
+
+.sidebox a:hover {
+  background-color: #ebebeb;
+}
+
+#mainbox {
+  grid-column: 2 / 5; /* Make the mainbox occupy the second column */
+  grid-row: 1 / 5; /* Span the mainbox from the first to the second row */
+  overflow: auto; /* Add overflow to handle large content */
+  margin-bottom: 2rem;
+}
+
+.profile {
+  gap: 1rem;
+}
+
+#mainbox .cartcard{
+  margin: 0 0 1rem 0;
+}
+
+
+.bottom-card{
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0;
+  display: none;
+
+  & i{
+    font-size: 2rem;
+    padding: 1rem;
+    
+  }
+}
+
+
+
+.personalinfo{
+  background-color: #fff;
+  padding: 2rem;
+
+
+  #lname{
+      margin-left: 1rem;
+  }
+
+  #male,#female{
+    margin: 0 1.5rem;
+  }
+
+  & h2{
+    margin-bottom: 1rem;
+  }
+
+  & h3{
+    margin: 1.5rem 0 1rem 0;
+  }
+
+  & input{
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+    border: 1px solid ;
+    padding: 1rem 2rem;
+    margin: 1rem  0 ;
+  }
+
+
+  & label{
+    font-size: 1.8rem;
+  }
+
+
+  & .edit-btn{
+    outline: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 2rem;
+    font-size: 1.4rem;
+  }
+}
+
+
+
+.address{
+  font-size: 1.8rem;
+  padding: 2rem;
+
+  & .address-card
+  {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #fff;
+  }
+
+  
+}
+
+
+
+
+
+@media (width <= 768px) {
+  .bottom-card{
+    display: flex;
+  }
+.personalinfo{
+
+  #lname{
+    margin-left: 0;
+}
+}
+
+  .sidebox, .username{
+    display: none;
+  }
+
+
+  #mainbox {
+    grid-column: 1 / 5; /* Make the mainbox occupy the second column */
+    grid-row: 1 / 5; /* Span the mainbox from the first to the second row */
+    overflow: auto; /* Add overflow to handle large content */
+  }
+}
+
+
+
