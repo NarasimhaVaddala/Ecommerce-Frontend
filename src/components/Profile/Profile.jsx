@@ -59,7 +59,7 @@ function Orders() {
 }
 
 function Account() {
-  return <div className='account'>
+  return <div className='account maindiv'>
 
     <div className="personalinfo">
 
@@ -105,33 +105,16 @@ function Account() {
 }
 
 function Address() {
-  return <div className='address'>
+  return <div className='address maindiv'>
 
+<h2>Your Addresses</h2>
 
     <div className="address-card">
-      <div>
-        Narasimha | +91 8978106223
-      </div>
-      <div>
-        Plot Number 474 , Hmt Swarnapuri Colony Miypur Hyderabad
-      </div>
-
-
+      <p> Narasimha | +91 8978106223 </p>
+      <p>Plot Number 474 , Hmt Swarnapuri Colony Miypur Hyderabad</p>
       <p className='cart-desc btn-group'>Delete <i class="fa-regular fa-trash-can"></i> | Edit <i class="fa-regular fa-edit"></i></p>
     </div>
-
-   
-    <div className="address-card">
-      <div>
-        Narasimha | +91 8978106223
-      </div>
-      <div>
-        Plot Number 474 , Hmt Swarnapuri Colony Miypur Hyderabad
-      </div>
-
-
-      <p className='cart-desc btn-group'>Delete <i class="fa-regular fa-trash-can"></i> | Edit <i class="fa-regular fa-edit"></i></p>
-    </div>
+    
 
 
 

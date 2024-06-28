@@ -19,6 +19,7 @@
   --bnt-hover-bg-color: #003b99;
   --btn-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   --footer-bg-color: #040d12;
+  
 }
 html{
   font-size: 62.5%;
@@ -50,6 +51,21 @@ h1,h2,h3,h4,h5,h6{
   font-family: "Roboto",sans-serif ;
   font-weight: 800;
 }
+
+
+.section-common--heading
+{ 
+  font-size: 2.4rem;
+    
+}
+  
+.section-common--subheading
+{
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+  
+  
 
 .grid{
   display: grid;

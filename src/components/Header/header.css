@@ -32,3 +32,24 @@ i:hover{
 }
 
 
+.head-category{
+  background-color: black;
+  
+  /* position: fixed; */
+  /* top: 1px; */
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+
+
+  & a{
+    color: white;
+    padding: 1rem;
+
+    &:hover{
+      color: black;
+      background-color: #fff;
+    }
+  }
+}

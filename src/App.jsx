@@ -8,11 +8,14 @@ import ProductList from './components/ProductList/ProductList'
 import DetailedProductView from './components/DetailedProductView/DetailedProductView'
 import CartPage from './components/CartPage/CartPage'
 import Profile from './components/Profile/Profile'
+import Footer from './components/Footer/Footer'
 
 export default function () {
   return (
     <>
       <Header />
+
+<main>
 
       <Routes>
 
@@ -20,22 +23,13 @@ export default function () {
         <Route path='/loader' element={<Loader />} />
         <Route path='/products/:title/:category' element={<ProductList />} />
         <Route path='/productView' element={<DetailedProductView />} />
-
         <Route path='/cart' element={<CartPage />} />
-
-
-
-
-
-
-
-
-
         <Route path="/profile/*" element={<Profile />} />
 
       </Routes>
+</main>
 
-
+      <Footer/>
     </>
   )
 }

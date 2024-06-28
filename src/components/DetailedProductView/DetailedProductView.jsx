@@ -27,13 +27,13 @@ export default function DetailedProductView() {
 
 
                     <div className="contentbox">
-                        <h2>Product Name</h2>
-                        <h2>₹ 1,799</h2>
+                        <h2 className='section-common--heading'>Product Name</h2>
+                        <h2 className='section-common--heading'>₹ 1,799</h2>
                         <p>Inclusive of all Taxes</p>
 
                         <hr />
 
-                        <h2>Select Size</h2>
+                        <h2 className='section-common--heading'>Select Size</h2>
 
                         <div className="radio-inputs">
 
