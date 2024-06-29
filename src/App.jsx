@@ -9,6 +9,7 @@ import DetailedProductView from './components/DetailedProductView/DetailedProduc
 import CartPage from './components/CartPage/CartPage'
 import Profile from './components/Profile/Profile'
 import Footer from './components/Footer/Footer'
+import Login from './components/Login/Login'
 
 export default function () {
   return (
@@ -24,6 +25,7 @@ export default function () {
         <Route path='/products/:title/:category' element={<ProductList />} />
         <Route path='/productView' element={<DetailedProductView />} />
         <Route path='/cart' element={<CartPage />} />
+        <Route path='/login/*' element={<Login/>} />
         <Route path="/profile/*" element={<Profile />} />
 
       </Routes>
