@@ -35,7 +35,7 @@ export default function DetailedProductView() {
           productName: "Ram",
           brandName: "This is a Good Product",
           desc:"lorem 7489464 asfdas",
-          price: 1799,
+          price: 799,
           size: selectedSize,
           img: "https://images.bewakoof.com/t640/women-s-black-graphic-printed-slim-fit-short-top-627787-1718703250-1.jpg",
         })

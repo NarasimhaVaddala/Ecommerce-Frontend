@@ -8,8 +8,7 @@ export default function Profile() {
     console.log("kadkja");
     return navigate("/");
   }
-
-  return (
+ return (
     <>
       <div className="container grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
         <div className="hidden lg:flex flex-col text-center bg-white sticky top-10 p-4 space-y-4">

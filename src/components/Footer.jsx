@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
     return (
-        <footer className="bg-black text-white p-4">
+        <footer className="bg-black text-white p-4 relative w-full top-10 ">
             <div className="container mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-8">
                 <div className="footer-div social-div">
                     <div className="text-xl font-semibold mb-2">nCART</div>
