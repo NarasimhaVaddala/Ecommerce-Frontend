@@ -2,7 +2,7 @@ import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
   items: [],
-  wishlist:[]
+  
 };
 
 export const cartSlice = createSlice({
@@ -12,6 +12,7 @@ export const cartSlice = createSlice({
   reducers: {
     add: (state, action) => {
       const { productName, brandName, desc,size, price, img } = action.payload;
+      
       state.items.push({
         productName: productName,
         brandName: brandName,
