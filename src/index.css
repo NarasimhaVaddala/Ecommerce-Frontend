@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: "Urbanist", sans-serif;
+}
+
+
+/* styles.css */
+
+
+@media (width < 768px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+
+@media (width < 640px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
