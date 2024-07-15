@@ -2,8 +2,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { del } from "../features/cart/cartSlice";
 
+
+import {add as addwish} from '../features/wishlist/wishSlice'
+import { toast, ToastContainer } from "react-toastify";
+
 export default function CartPage() {
   const items = useSelector((state) => state.cart.items);
+  
   const length = items.length;
   let Totalprice = 0;
   const Tprice = items.reduce((acc, cur, index, arr) => {
@@ -15,6 +20,11 @@ export default function CartPage() {
   } else {
     Totalprice = Tprice + 59 + 49;
   }
+
+
+
+
+
   return (
     <>
       {length ? (
@@ -26,11 +36,21 @@ export default function CartPage() {
                 <Cartcard
                   key={e.id}
                   id={e.id}
-                  size={e.size}
-                  title={e.title}
-                  description={e.description}
+                  // size={e.size}
+                  // title={e.title}
+                  // description={e.description}
+                  // price={e.price}
+                  // img={e.img}
+
+                  productName={e.productName}
+                  brandName={e.brandName}
+                  desc={e.desc}
                   price={e.price}
+                  size={e.size}
                   img={e.img}
+
+
+
                 />
               ))}
           </div>
@@ -91,30 +111,50 @@ function Addressbox() {
 }
 
 function Cartcard(props) {
-  const { title, description, price, size, img, id } = props;
+  const {  img, id , productName, brandName, desc,price,size,} = props;
   const dispatch = useDispatch();
+
+
+  const wishlist = ()=>{
+    console.log(props);
+    dispatch(addwish(props))
+    toast.success("Added to Wishlist")
+}
+
+
+
   return (
     <div className="flex border p-2 mb-1">
       <div className="flex h-28 w-28">
         <img src={img} alt="" className="h-full w-3/4" />
       </div>
       <div className="ml-4">
-        <h3 className="text-xl">{title}</h3>
-        <p className="text-slate-800">{description}</p>
+        <h3 className="text-xl">{productName}</h3>
+        <p className="text-slate-800">{desc}</p>
 
         <p>Rs {price}/-</p>
         <p>Size : {size}</p>
-        <p>View Details</p>
-        <div className="flex items-center justify-between">
-          <button onClick={() => dispatch(del({ id: id }))} className="text-xl">
+        
+        <div className="flex items-center gap-4">
+          <button onClick={() => dispatch(del({ id: id }))} className="text-sm">
             <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
           </button>
           |
-          <button className="text-xl">
+          <button className="text-sm" onClick={wishlist}>
             <i className="fa-regular fa-heart transition-all linear duration-100 hover:scale-105 hover:text-red-600"></i>
           </button>
+
+          <ToastContainer/>
         </div>
       </div>
     </div>
   );
 }
+
+
+// productName: productName,
+// brandName: brandName,
+// desc: desc,
+// price: price,
+// size:size,
+// img: img,

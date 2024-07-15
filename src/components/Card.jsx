@@ -6,15 +6,19 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { useDispatch } from "react-redux";
 
-export default function Card({ price, img, category, url, brand, name }) {
+export default function Card({ productName,brandName,desc,price,size,img, })
+ {
   const dispatch = useDispatch();
 
   const addtoWishlist = () => {
     dispatch(
       add({
-        productName: name,
-        brandName: brand,
+        
+        productName: productName,
+        brandName: brandName,
+        desc: desc,
         price: price,
+        size:size,
         img: img,
       })
     );
@@ -23,37 +27,37 @@ export default function Card({ price, img, category, url, brand, name }) {
   };
 
   return (
-    <div
-      className={`flex flex-col mt-4 md:h-96  hover:cursor-pointer transition ease-in-out duration-300 ${
-        !category && "lg:shadow-xl"
-      } ${!category && "md:h-[auto]"}`}
-    >
+    <div className={`flex flex-col mb-32 md:h-96  hover:cursor-pointer transition ease-in-out duration-300`}>
       <div className="h-[95%] shadow-lg">
-        <Link to={`${url}`}>
+        <Link to={`/product/`}>
           <img className="w-[100%] h-[100%] " src={img} alt="Rashmika" />
         </Link>
       </div>
-
-      {category && (
-        <p className="font-semibold text-slate-500  mt-1 text-sm ">
-          <span className="capitalize">{category}</span> starting at
-          <strong>{price}</strong>
-        </p>
-      )}
       <ToastContainer />
-      {brand && (
-        <p className="font-bold px-2 mt-2 flex justify-between">
-          <span>{brand}</span>
+           <p className="font-bold px-1 mt-2 flex justify-between text-lg">
+          <span>{productName}</span>
           <i
             className="fa-regular fa-heart hover:text-red-600 hover:scale-110"
             onClick={addtoWishlist}
           ></i>
         </p>
-      )}
-      {name && <p className="font-semibold text-slate-600 px-2">{name}</p>}
-      {!category && (
-        <p className="font-extrabold text-xl text-slate px-2">Rs {price}/-</p>
-      )}
+      
+      <p className="font-semibold text-slate-600 px-1">by {brandName}</p>
+    
+        <p className=" px-1 flex justify-between items-center"><span className="font-extrabold text-xl text-slate">Rs {price}/-</span>   {price>=499 && <span className="bg-blue-400 text-white text-xs p-1">Free Delivery</span>}</p>
+    
     </div>
   );
 }
+
+
+// productName: productName,
+// brandName: brandName,
+// desc: desc,
+// price: price,
+// size:size,
+// img: img,
+
+// ${
+//   !category && "lg:shadow-xl"
+// } ${!category && "md:h-[auto]"}

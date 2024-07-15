@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 export default function Carousel() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slides = [
-        '/Banner1.png',
+        '/Banner1.webp',
 
-        'Banner2.png',
+        'Banner2.webp',
 
-        'Banner3.png'
+        'Banner3.webp'
     ];
 
     // const slides = [
@@ -27,7 +27,6 @@ export default function Carousel() {
     };
 
     useEffect(() => {
-        console.log("rendered Carousel");
         const interval = setInterval(() => {
             nextSlide();
         }, 3000); // Change slide every 3 seconds

@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from "../components/Carousel";
 import { Link } from "react-router-dom";
-import Card from "./Card";
+
 
 export default function Home() {
   const men = [
@@ -100,7 +100,7 @@ function Categorysection({ gender, list }) {
         <div className="grid grid-cols-2  lg:grid-cols-4 gap-4">
           {list.map((e) => {
             return (
-              <Card
+              <Homecard
                 key={e.category}
                 price={e.price}
                 img={e.imgurl}
@@ -117,3 +117,27 @@ function Categorysection({ gender, list }) {
 }
 
 
+function Homecard({ price, img, category, url, brand, name }){
+  return (
+    <div
+      className={`flex flex-col mt-4 md:h-96  hover:cursor-pointer transition ease-in-out duration-300 ${
+        !category && "lg:shadow-xl"
+      } ${!category && "md:h-[auto]"}`}
+    >
+      <div className="h-[95%] shadow-lg">
+        <Link to={`${url}`}>
+          <img className="w-[100%] h-[100%] " src={img} alt="Rashmika" />
+        </Link>
+      </div>
+
+      
+        <p className="font-semibold text-slate-500  mt-1 text-md ">
+          <span className="capitalize">{category}</span> starting at <strong>{price}</strong>
+        </p>
+      
+      
+   
+     
+    </div>
+  );
+}
