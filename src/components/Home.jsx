@@ -97,7 +97,7 @@ function Categorysection({ gender, list }) {
           Shop on Wide range of products for {gender}
         </p>
 
-        <div className="grid grid-cols-2  lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-2  lg:grid-cols-4 gap-4">
           {list.map((e) => {
             return (
               <Card
