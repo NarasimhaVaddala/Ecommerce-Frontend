@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
 export default function Profile() {
   const navigate = useNavigate();
 
@@ -50,10 +50,7 @@ function Orders() {
       <h2 className="text-2xl my-1">Orders</h2>
       <hr className="mb-4" />
 
-      <Cartcard />
-      <Cartcard />
-      <Cartcard />
-      <Cartcard />
+      
     </>
   );
 }
@@ -209,21 +206,22 @@ function Address() {
 //   );
 // }
 
-function Cartcard() {
+function Cartcard({img, brandName , productName}) {
+ 
   return (
     <div className="flex border-[1px] p-2 mb-1">
       <div className="cartimg flex h-28 w-28  ">
         <img
-          src="https://images.bewakoof.com/t640/women-s-black-graphic-printed-slim-fit-short-top-627787-1718703250-1.jpg"
+          src={img}
           alt=""
           className="h-[100%] w-[70%]"
         />
       </div>
 
       <div className="content">
-        <h3 className="text-xl">Heading</h3>
+        <h3 className="text-xl">{brandName}</h3>
         <p className="text-slate-800">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga, vero?
+          {productName}
         </p>
         <p>Status : Delivered</p>
         <p>View Details</p>
@@ -233,18 +231,25 @@ function Cartcard() {
 }
 
 function Wishlist() {
+
+  const items = useSelector((state)=>state.wish.wishlist)
+  console.log(items);
   return (
     <>
       <h2 className="text-2xl my-1">Wishlist</h2>
       <hr className="mb-4" />
-      <Cartcard />
+      {
+        items.map((e)=>{
+          return   <Cartcard key={e.id} img={e.img} productName={e.productName} brandName={e.brandName}/>
+        })
+      }
     </>
   );
 }
 
 function BottomCard() {
   return (
-    <div className="bottom-card w-full bg-white flex items-center justify-around fixed bottom-0 md:hidden">
+    <div className="z-10 bottom-card w-full bg-white flex items-center justify-around fixed bottom-0 lg:hidden">
       <Link to="orders">
         <i className="fa-solid fa-box text-2xl p-4"></i>
       </Link>

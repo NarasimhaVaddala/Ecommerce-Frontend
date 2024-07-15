@@ -3,12 +3,20 @@ import React, { useState, useEffect } from 'react';
 export default function Carousel() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slides = [
-        'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        '/Banner1.png',
 
-        'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'Banner2.png',
 
-        'https://images.pexels.com/photos/1648389/pexels-photo-1648389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+        'Banner3.png'
     ];
+
+    // const slides = [
+    //     'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+
+    //     'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+
+    //     'https://images.pexels.com/photos/1648389/pexels-photo-1648389.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+    // ];
 
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev + 1) % slides.length);

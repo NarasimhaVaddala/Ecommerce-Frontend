@@ -4,18 +4,35 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import {add, del} from "../features/cart/cartSlice"
-import { useNavigate } from "react-router-dom";
+import {add} from "../features/cart/cartSlice"
+
+import { add as wishadd } from "../features/wishlist/wishSlice";
+
 
 export default function DetailedProductView() {
   const items = useSelector((state) => state.cart.items);
-  const navigate = useNavigate()
+
   const dispatch = useDispatch()
   const [selectedSize, setSelectedSize] = useState("");
 
   const handleSizeChange = (event) => {
     setSelectedSize(event.target.value);
   };
+
+
+  const addtoWishlist = () => {
+    dispatch(
+      wishadd({
+        productName: "Ram",
+        brandName:  "This is a Good Product",
+        img: "https://images.bewakoof.com/t640/women-s-black-graphic-printed-slim-fit-short-top-627787-1718703250-1.jpg",
+     
+      })
+    );
+
+    toast.success("Added To Wishlist");
+  };
+
 
   const AddtoCart = () => {
 
@@ -102,7 +119,7 @@ export default function DetailedProductView() {
               </button>
 
 
-              <button className="w-[100%]  transition-all ease-in-out duration-300 border border-green-600 text-green-600 py-2 px-4 rounded flex items-center justify-center hover:bg-green-500 hover:text-white ">
+              <button className="w-[100%]  transition-all ease-in-out duration-300 border border-green-600 text-green-600 py-2 px-4 rounded flex items-center justify-center hover:bg-green-500 hover:text-white " onClick={addtoWishlist}> 
                 <i className="fa-regular fa-heart mr-2"></i> Add To Wishlist
               </button>
 
