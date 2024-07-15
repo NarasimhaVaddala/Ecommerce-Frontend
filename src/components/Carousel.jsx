@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 export default function Carousel() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slides = [
-        '/Banner1.webp',
+        'https://images.bewakoof.com/uploads/grid/app/desktop---2-1719380448.jpg',
 
-        'Banner2.webp',
+        'https://images.bewakoof.com/uploads/grid/app/desktop---4-1719380449.jpg',
 
-        'Banner3.webp'
+        'https://images.bewakoof.com/uploads/grid/app/desktop---3-1719380449.jpg'
     ];
 
     // const slides = [
