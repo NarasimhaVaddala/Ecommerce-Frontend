@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   wishlist: [],
@@ -10,22 +10,16 @@ export const wishSlice = createSlice({
 
   reducers: {
     add: (state, action) => {
-      const { productName, brandName, desc,size, price, img } = action.payload;
-      
-      state.wishlist.push({
-        productName: productName,
-        brandName: brandName,
-        desc: desc,
-        price: price,
-        size:size,
-        img: img,
-        id:nanoid()
-      });
-    },
+      let alreadyThere = state.wishlist.find((e) => e._id === action.payload._id);
 
-    del :(state,action)=>{
-        state.wishlist = state.wishlist.filter(e=>e.id!=action.payload.id)
-    }
+      if (!alreadyThere) {
+        state.wishlist.push(action.payload);
+      }
+     
+    },
+    del: (state, action) => {
+      state.wishlist = state.wishlist.filter((e) => e._id != action.payload);
+    },
   },
 });
 

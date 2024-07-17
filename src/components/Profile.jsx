@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { del as delwish } from "../features/wishlist/wishSlice";
 export default function Profile() {
   const navigate = useNavigate();
 
@@ -8,6 +9,7 @@ export default function Profile() {
     console.log("kadkja");
     return navigate("/");
   }
+  
  return (
     <>
       <div className="container grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
@@ -187,42 +189,29 @@ function Address() {
   );
 }
 
-// function Cartcard() {
-//   return (
-//     <div className="cartcard flex mb-4">
 
-//       <div className="cart-img  h-40">
-//         <img src="https://images.bewakoof.com/t640/women-s-black-graphic-printed-slim-fit-short-top-627787-1718703250-1.jpg" alt="" className="h-[100%] w-[70%]" />
-//       </div>
 
-//       <div className="cart-content ">
-//         <h2 className='text-xl '>ITEM HEADING</h2>
-//         <p className="cart-desc ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae voluptatum beatae</p>
-//         <p className='cart-desc '>Qty 1</p>
-//         <h2 className="price text-xl">Rs. 1799</h2>
-//       </div>
+function Cartcard({obj}) {
 
-//     </div>
-//   );
-// }
-
-function Cartcard({img, brandName , productName}) {
- 
+  
+ const dispatch = useDispatch()
   return (
     <div className="flex border-[1px] p-2 mb-1">
+
       <div className="cartimg flex h-28 w-28  ">
-        <img
-          src={img}
-          alt=""
-          className="h-[100%] w-[70%]"
-        />
+        <img src={obj.image}  alt="Image" className="h-[100%] w-[70%]" />
       </div>
 
       <div className="content">
-        <h3 className="text-xl">{brandName}</h3>
-        <p className="text-slate-800">
-          {productName}
-        </p>
+        <div className="flex justify-between w-full">
+        <h3 className="text-xl">{obj.brand}</h3>
+        <button onClick={() => dispatch(delwish(obj._id))} className="text-sm">
+            <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
+          </button>
+
+        </div>
+        
+        <p className="text-slate-800">{obj.name}</p>
         <p>Status : Delivered</p>
         <p>View Details</p>
       </div>
@@ -239,9 +228,7 @@ function Wishlist() {
       <h2 className="text-2xl my-1">Wishlist</h2>
       <hr className="mb-4" />
       {
-        items.map((e)=>{
-          return   <Cartcard key={e.id} img={e.img} productName={e.productName} brandName={e.brandName}/>
-        })
+        items.map(e=><Cartcard key={e._id} obj={e} />)
       }
     </>
   );

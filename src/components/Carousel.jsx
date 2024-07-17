@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 export default function Carousel() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const slides = [
-        'https://images.bewakoof.com/uploads/grid/app/desktop---2-1719380448.jpg',
+        'https://www.shutterstock.com/image-vector/ecommerce-website-banner-template-presents-260nw-2252124451.jpg',
 
-        'https://images.bewakoof.com/uploads/grid/app/desktop---4-1719380449.jpg',
+        'https://i.pinimg.com/736x/cb/31/87/cb318789eecdbe77c9375cf78ba0f25e.jpg',
 
-        'https://images.bewakoof.com/uploads/grid/app/desktop---3-1719380449.jpg'
+        'https://www.shutterstock.com/image-vector/super-sale-discount-e-commerce-260nw-1384030046.jpg'
     ];
 
     // const slides = [
