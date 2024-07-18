@@ -1,9 +1,12 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
+import axios from "axios";
 
 
 const initialState = {
   products: [],
 };
+
+
 
 
 
@@ -16,9 +19,10 @@ export const productSlice = createSlice({
 
   reducers: {
     
+    
   },
 });
 
-export const { } = productSlice.actions;
+export const {  } = productSlice.actions;
 
 export default productSlice.reducer;

@@ -100,13 +100,8 @@ function Categorysection({ gender, list }) {
         <div className="grid grid-cols-2  lg:grid-cols-4 gap-4">
           {list.map((e) => {
             return (
-              <Homecard
-                key={e.category}
-                price={e.price}
-                img={e.imgurl}
-                category={e.category}
-                gender={gender}
-                url={`/products/${gender}/${e.category}`}
+              <Homecard key={e.category} price={e.price} img={e.imgurl}  category={e.category} gender={gender}
+                url={`/products/${gender}/${e.category.toLowerCase().split(' ').join('')}`}
               />
             );
           })}
@@ -118,6 +113,7 @@ function Categorysection({ gender, list }) {
 
 
 function Homecard({ price, img, category, url, brand, name }){
+
   return (
     <div
       className={`flex flex-col mt-4 md:h-96  hover:cursor-pointer transition ease-in-out duration-300 ${
@@ -126,7 +122,7 @@ function Homecard({ price, img, category, url, brand, name }){
     >
       <div className="h-[95%] shadow-lg">
         <Link to={`${url}`}>
-          <img className="w-[100%] h-[100%] " src={img} alt="Rashmika" />
+          <img className="w-[100%] h-[100%]" src={img} alt="Rashmika" loading="lazy" />
         </Link>
       </div>
 

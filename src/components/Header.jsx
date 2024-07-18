@@ -10,7 +10,7 @@ export default function Header({ logo }) {
     setIsOpen(!isOpen);
   };
   return (
-    <header className="bg-slate-200">
+    <header className="bg-blue-200">
       <nav className="container  flex items-center justify-between">
         <div className="h-[3rem] logo flex items-center justify-center">
           <img className="h-[100%] scale-150" src={logo} alt="" />
@@ -45,6 +45,8 @@ export default function Header({ logo }) {
         </button>
         <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
       </nav>
+
+      
     </header>
   );
 }

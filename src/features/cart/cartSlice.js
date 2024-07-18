@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   items: [],
@@ -9,26 +9,23 @@ const initialState = {
 
 
 function calculatePrice(arr){
-
     if (!arr) {
       return
     }
-
     else{
-      const priceForItems =  arr.reduce((acc, cur, index, arr) => {return acc + cur.price},0);
+      const priceForItems =  arr.reduce((acc, cur, index, arr) => {return acc +( cur.price*cur.qty)},0);
       let totalPrice = 0
-      let packagingFee = 0
+      let packagingFee = 59
       let deliveryCharges = 0 
     
-      if (priceForItems >= 499 ) {
-        packagingFee = 59;
+      if (priceForItems >= 499 ) {        
         deliveryCharges = 0;
         totalPrice = priceForItems + packagingFee + deliveryCharges
         return {totalPrice , priceForItems , packagingFee , deliveryCharges}
         
       }
       else{
-        packagingFee = 59;
+        
         deliveryCharges = 49;
         totalPrice = priceForItems + packagingFee + deliveryCharges
         return {totalPrice , priceForItems , packagingFee , deliveryCharges}
@@ -44,20 +41,24 @@ export const cartSlice = createSlice({
   reducers: {
     add: (state, action) => {
       state.items.push(action.payload)
-      state.priceDetails = calculatePrice(state.items)
-      
-      
+      state.priceDetails = calculatePrice(state.items)      
     },
     
     del :(state,action)=>{
-      state.items = state.items.filter(e=>e.id!=action.payload.id)
+      state.items = state.items.filter(e=>e._id!=action.payload.id)
       state.priceDetails = calculatePrice(state.items)
-    }
+    },
+    
+    qty:(state,action)=>{
+      let item = state.items.find(e => e._id === action.payload.id);
+      item.qty = action.payload.qty;  
+      state.priceDetails = calculatePrice(state.items)     
+     }
   },
 });
 
 
-export const { add,del } = cartSlice.actions
+export const { add,del,qty } = cartSlice.actions
 
 export default cartSlice.reducer
 

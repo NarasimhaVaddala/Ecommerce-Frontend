@@ -1,6 +1,6 @@
-import React from "react";
+import React , { useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { del } from "../features/cart/cartSlice";
+import { del, qty as quantity } from "../features/cart/cartSlice";
 import { add as addwish } from "../features/wishlist/wishSlice";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -9,11 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 //Main Page Starts Here
 export default function CartPage() {
-  const items = useSelector((state) => state.cart.items);
-  
-
-
- 
+  const items = useSelector((state) => state.cart.items); 
   return (
     <>
       {items.length ? (
@@ -36,28 +32,27 @@ export default function CartPage() {
 
 
 // PriceBox Starts Here
-function Pricebox(props) {
-
-  
-  const priceDetails = useSelector((state) => state.cart.priceDetails);
-  
+function Pricebox(props) {  
+  const priceDetails = useSelector((state) => state.cart.priceDetails);  
   return (
     <div className="bg-white p-4 sticky top-4 lg:col-start-3 lg:row-start-1">
       <h2 className="text-lg font-bold ">DETAILS</h2>
       <hr />
       <p className="flex justify-between mb-1 text-lg">
         <span>Price ({props.noOfItems} Items)</span>
-        <span>{priceDetails.priceForItems }/-</span>
+        <span>{priceDetails.priceForItems}/-</span>
       </p>
       <p className="flex justify-between mb-1 text-lg">
         <span>Delivery Charges</span>
         {priceDetails.deliveryCharges? <span>{priceDetails.deliveryCharges}/-</span> : <span>Free Delivery</span>}
       </p>
       <p className="flex justify-between mb-1 text-lg">
-        <span>Packaging Fee</span> <span>{priceDetails.packagingFee}</span>
+        <span>Packaging Fee</span>
+        <span>{priceDetails.packagingFee}/-</span>
       </p>
       <p className="flex justify-between mb-1 text-lg font-bold">
-        <span>Total Amount</span> <span>{priceDetails.totalPrice}/-</span>
+        <span>Total Amount</span> 
+        <span>{priceDetails.totalPrice}/-</span>
       </p>
       <button className="transition-all ease-in-out duration-300 bg-black border text-white py-2 px-4 rounded flex items-center justify-center hover:bg-white hover:text-black hover:border-black hover:border-[1px] w-full">
         Buy Now
@@ -94,32 +89,54 @@ function Addressbox() {
 
 
 //Card Starts Here
+//Card Starts Here
 function Cartcard(props) {
-  const {obj} = props;
+  const { obj } = props;
+  const [qty, setqty] = useState(obj.qty); // initialize with obj.qty
   const dispatch = useDispatch();
 
-  const wishlist = () => {   
+  const wishlist = () => {
     dispatch(addwish(props));
     toast.success("Added to Wishlist");
   };
 
+  const increase = () => {
+    setqty(prevQty => {
+      const newQty = prevQty < 5 ? prevQty + 1 : prevQty;
+      dispatch(quantity({ qty: newQty, id: obj._id }));
+      return newQty;
+    });
+  };
+
+  const decrease = () => {
+    setqty(prevQty => {
+      const newQty = prevQty > 1 ? prevQty - 1 : prevQty;
+      dispatch(quantity({ qty: newQty, id: obj._id }));
+      return newQty;
+    });
+  };
+
   return (
     <div className="flex border p-2 mb-1">
-      <div className="flex h-28 w-28">
-        <img src={obj.image} alt="image" className="h-full w-3/4" />
+      <div className="flex h-full w-28">
+        <img src={obj.image} alt="image" className="h-full w-full" />
       </div>
       <div className="ml-4">
         <h3 className="text-xl">{obj.name}</h3>
-        <p className="text-slate-800">{obj.description}</p>
-
-        <p>Rs {obj.price}/-</p>
+        <p>Rs {obj.price * qty}/-</p>
         <p>Size : {obj.size}</p>
-
-        <div className="flex items-center gap-4">
+        {/* Buttons for Increasing or Decreasing the quantity of the product */}
+        <div className="flex justify-start gap-x-4 items-center my-1">
+          <button className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full" onClick={decrease}>-</button>
+          <span>{qty}</span>
+          <button className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full" onClick={increase}>+</button>
+        </div>
+        {/* Buttons for Increasing or Decreasing the quantity of the product */}
+        <div className="flex justify-start gap-x-4 items-center my-1">
           <button onClick={() => dispatch(del({ id: obj._id }))} className="text-sm">
             <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
           </button>
-          |
+          <span>|</span>
           <button className="text-sm" onClick={wishlist}>
             <i className="fa-regular fa-heart transition-all linear duration-100 hover:scale-105 hover:text-red-600"></i>
           </button>
@@ -129,5 +146,7 @@ function Cartcard(props) {
     </div>
   );
 }
+//Card Ends Here
+
 //Card Endss Here
 

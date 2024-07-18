@@ -1,7 +1,7 @@
 import {createContext} from 'react'
 
 
- const UserContext = createContext()
+ const UserContext = createContext(0)
 
 
  export default UserContext
