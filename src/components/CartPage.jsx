@@ -96,8 +96,8 @@ function Cartcard(props) {
   const dispatch = useDispatch();
 
   const wishlist = () => {
-    dispatch(addwish(props));
-    toast.success("Added to Wishlist");
+    dispatch(addwish(obj));
+    toast.info("Added to Wishlist");
   };
 
   const increase = () => {
@@ -121,32 +121,38 @@ function Cartcard(props) {
       <div className="flex h-full w-28">
         <img src={obj.image} alt="image" className="h-full w-full" />
       </div>
-      <div className="ml-4">
-        <h3 className="text-xl">{obj.name}</h3>
-        <p>Rs {obj.price * qty}/-</p>
+      <div className="ml-4 w-full">
+        <div className="flex justify-between items-center w-full">
+            <h3 className="font-bold">{obj.name}</h3>
+            <div className="flex justify-start gap-x-4 items-center my-1">
+              <button onClick={() => dispatch(del({ id: obj._id }))} className="text-sm">
+                <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
+              </button>
+              <span>|</span>
+              <button className="text-sm" onClick={wishlist}>
+                <i className="fa-regular fa-heart transition-all linear duration-100 hover:scale-105 hover:text-red-600"></i>
+              </button>
+              <ToastContainer />
+            </div>
+        </div>
         <p>Size : {obj.size}</p>
         {/* Buttons for Increasing or Decreasing the quantity of the product */}
         <div className="flex justify-start gap-x-4 items-center my-1">
+
+        <span>Qty</span>
+
           <button className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full" onClick={decrease}>-</button>
           <span>{qty}</span>
           <button className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full" onClick={increase}>+</button>
         </div>
         {/* Buttons for Increasing or Decreasing the quantity of the product */}
-        <div className="flex justify-start gap-x-4 items-center my-1">
-          <button onClick={() => dispatch(del({ id: obj._id }))} className="text-sm">
-            <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
-          </button>
-          <span>|</span>
-          <button className="text-sm" onClick={wishlist}>
-            <i className="fa-regular fa-heart transition-all linear duration-100 hover:scale-105 hover:text-red-600"></i>
-          </button>
-          <ToastContainer />
-        </div>
+        <p className="font-bold">₹ {obj.price * qty}/-</p>
+        
       </div>
     </div>
   );
 }
 //Card Ends Here
 
-//Card Endss Here
+
 

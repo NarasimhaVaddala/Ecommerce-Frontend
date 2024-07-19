@@ -23,17 +23,19 @@ export default function Header({ logo }) {
 
         <ul className="hidden lg:flex">
           <li className="mx-4">
-            <Link to="/">Home</Link>
+            <Link to="/">
+            <i class="fa-solid fa-house fa-lg"></i>
+            </Link>
           </li>
           <li className="mx-4">
-            <Link to="/profile">Profile</Link>
+            <Link to="/profile">
+            <i class="fa-solid fa-user-circle fa-lg"></i>
+            </Link>
           </li>
-          <li className="mx-4">
-            <Link to="/">Services</Link>
-          </li>
+         
           <li className="mx-4">
             <Link to="/cart" className="relative">
-              <i className="fa-solid fa-cart-shopping"></i>
+              <i className="fa-solid fa-cart-shopping fa-lg"></i>
               <span className="absolute top-[-12px] left-[10px] bg-red-600 p-1 rounded-full h-4 w-4 text-lg  flex justify-center items-center">
                 {items.length}
               </span>

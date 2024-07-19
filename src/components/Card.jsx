@@ -14,7 +14,7 @@ export default function Card({ obj })
   };
 
   return (
-    <div className={`flex flex-col mb-32 md:h-96  hover:cursor-pointer transition ease-in-out duration-300`}>
+    <div className={`flex flex-col mb-32 h-96  hover:cursor-pointer transition ease-in-out duration-300`}>
 
       <div className="h-[95%] shadow-lg">
         <Link to={`/product/${obj._id}`}>

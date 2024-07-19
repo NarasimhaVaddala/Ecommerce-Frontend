@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function ProductsDropdown() {
 
 
-    
+
   const men = {
     topwear: ["shirts", "tshirts"],
     bottomwear: ["jeans", "trousers", "joggers", "cargos"],
@@ -26,9 +26,9 @@ export default function ProductsDropdown() {
   return (
     <>
       
-      <MainDropdown obj={men} title="Men" />
-      <MainDropdown obj={women} title="Women" />
-      <MainDropdown obj={kids} title="Kids" />
+      <MainDropdown obj={men} title="men" />
+      <MainDropdown obj={women} title="women" />
+      <MainDropdown obj={kids} title="kids" />
       
       
     </>
@@ -74,11 +74,11 @@ function MainDropdown({ obj , title}) {
 
     <>
     <div className="flex flex-col gap-1 mb-2">
-      <h3 className="text-xl font-bold text-blue-800">{title}</h3>
+      <h3 className="text-xl font-bold text-blue-800 capitalize">{title}</h3>
       <div className="flex flex-col gap-2">
         {Object.entries(obj).map((e) => {
             return (
-                <Dropdown title={e[0]} text={e[1]} url={`/products/men/${e[0]}`} />
+                <Dropdown title={e[0]} text={e[1]} url={`/products/${title}/${e[0]}`} />
             );
         })}
       </div>

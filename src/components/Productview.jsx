@@ -32,11 +32,13 @@ export default function DetailedProductView()
 //Function to Add Item to Cart
   const AddtoCart = () => {
     if (!selectedSize) toast.warn("Please Select Size")
+    if (items.find(e => e._id === id))toast.info("This item is already added to cart")     
     else if (items.length >= 9) toast.error("Cart is Full")
     else{
       dispatch(add({ ...data, size: selectedSize, qty:1 }));
       toast.success("Added To Cart");
       setSelectedSize("");
+      
     }
   };
 
@@ -47,7 +49,7 @@ export default function DetailedProductView()
     await axios
     .get(`http://localhost:3000/products/product/${id}`)
     .then((res) => setData(res.data.data[0]))
-    .catch((err) => console.log(err.message));
+    .catch((err) => toast.error(err.message));
     value.setLoading(false)
   };
 

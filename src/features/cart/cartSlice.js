@@ -39,9 +39,14 @@ export const cartSlice = createSlice({
   initialState,
 
   reducers: {
-    add: (state, action) => {
-      state.items.push(action.payload)
-      state.priceDetails = calculatePrice(state.items)      
+    add: (state, action) => { 
+      
+      let alreadyThere = state.items.find((e) => e._id === action.payload._id);
+      
+      if (!alreadyThere) {
+        state.items.push(action.payload);
+        state.priceDetails = calculatePrice(state.items)  
+      }
     },
     
     del :(state,action)=>{
