@@ -10,6 +10,7 @@ import CartPage from "./components/CartPage";
 import UserContext from "./app/context";
 import Loader from './components/Loader';
 import Dropdown from "./components/Dropdown";
+import Addproduct from './components/AddProduct'
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -27,9 +28,14 @@ export default function App() {
           <Route path="/product/:id" element={<Productview />} />
           <Route path="/profile/*" element={<Profile />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/add" element={<Addproduct />} />
+
         </Routes>
       </UserContext.Provider>
       <Footer />
     </>
   );
 }
+
+
+

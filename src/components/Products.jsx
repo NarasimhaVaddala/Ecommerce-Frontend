@@ -10,7 +10,7 @@ export default function Products() {
   const [data, setData] = useState([]);
 
   const {gender , category , type } = useParams()
-  console.log(gender , category , type );
+  
 
   const dispatch = useDispatch();
 
@@ -35,13 +35,25 @@ export default function Products() {
     getData();
   }, [gender , category]);
 
-  //   <Link className="font-semibold" to={`/products/men/topwear`}>Men Topwear</Link>
-  // <hr />
-  //   <Link className="font-semibold" to={`/products/women/topwear`}>Account Settings</Link>
-  // <hr />
-  //   <Link className="font-semibold" to={`/products/babies/topwear`}>Address</Link>
-
-  // <hr />
+  
+  
+  const men = {
+    topwear: ["shirts", "tshirts"],
+    bottomwear: ["jeans", "trousers", "joggers", "cargos"],
+    inners: ["boxers","brief","tank"],
+    footwear: ["shoes", "sandals", "slides"],
+  }
+  const women = {
+    topwear: ["croptops", "sleeveless", "shirts", "traditional"],
+    bottomwear: ["leggings", "trousers", "jeans", "skirts"],
+    inners: ["brief", "bra/panty", "slips"],
+    footwear: ["shoes", "sandals", "slides"],
+  }
+ const kids= {
+    boys: ["shirts", "trousers", "traditional"],
+    girls: ["shirts", "trousers", "traditional"],
+    babies: ["combos", "underwear"],
+  }
 
   return (
     <section >
@@ -56,23 +68,37 @@ export default function Products() {
         <div className="flex flex-col gap-4">
               <h3 className="text-xl font-bold text-blue-800">Men</h3>
               <div className="flex flex-col gap-2">
-                  <Dropdown title="Topwear" text={["shirts", "tshirts"]} url='/products/men/topwear'/> 
-                  <Dropdown title="Bottom wear" text={["jeans", "trousers", 'joggers' , 'boxers']} url='/products/men/bottomwear'/> 
-                  <Dropdown title="Inners" text={["tanks", "underwear"]} url='/products/men/inners'/> 
-                  <Dropdown title="Footwear" text={["sandals", "shoes", 'slides']} url='/products/men/bottomwear'/>                 
+              {
+                    Object.entries(men).map((e)=>{
+                      return <Dropdown title={e[0]} text={e[1]} url={`/products/men/${e[0]}`}/>
+                    })
+              }                
               </div>                
         </div>
         <hr />
         <div className="flex flex-col gap-4">
               <h3 className="text-xl font-bold text-blue-800">Women</h3>
               <div className="flex flex-col gap-2">
-                  <Dropdown title="Topwear" text={["shirts", "tshirts"]} url='/products/women/topwear'/> 
-                  <Dropdown title="Bottom wear" text={["jeans", "trousers", 'joggers' , 'boxers']} url='/products/women/bottomwear'/> 
-                  <Dropdown title="Inners" text={["tanks", "underwear"]} url='/products/women/inners'/> 
-                  <Dropdown title="Footwear" text={["sandals", "shoes", 'slides']} url='/products/women/bottomwear'/>                 
+              {
+                    Object.entries(women).map((e)=>{
+                      return <Dropdown title={e[0]} text={e[1]} url={`/products/women/${e[0]}`}/>
+                    })
+              }                
               </div>                
         </div>
         <hr />
+        <div className="flex flex-col gap-4">
+              <h3 className="text-xl font-bold text-blue-800">Kids</h3>
+              <div className="flex flex-col gap-2">
+              {
+                    Object.entries(kids).map((e)=>{
+                      return <Dropdown title={e[0]} text={e[1]} url={`/products/kids/${e[0]}`}/>
+                    })
+              }                
+              </div>                
+        </div>
+        <hr />
+
        
       </div>
 
@@ -82,7 +108,7 @@ export default function Products() {
       <div className="mx-auto row-span-4 grid grid-cols-2 lg:grid-cols-3 lg:col-start-2 lg:col-end-5 gap-4">
         
         {data.length<1?<p className="text-center font-bold text-xl">No Products Available</p> :data.map(e=> <Card obj={e}  key={e._id}  /> )}
-        
+           
       </div>
       </div>
     </section>
@@ -98,10 +124,7 @@ function Dropdown({title , text, url}) {
 
   return (
     <div className="flex flex-col gap-2">
-      <button
-        className="flex gap-4 items-center justify-between font-bold"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <button className="flex gap-4 items-center justify-between font-bold" onClick={() => setIsOpen(!isOpen)}>
         <span>{title}</span>
         <i className="fa-solid fa-chevron-down"></i>
       </button>
@@ -120,3 +143,9 @@ function Dropdown({title , text, url}) {
     
   );
 }
+
+
+
+
+
+

@@ -24,7 +24,7 @@ export default function Card({ obj })
       {/* This Toast component will open a notification when added to wishlist */}
       <ToastContainer />
         <p className="font-bold px-1 mt-2 flex justify-between text-lg">
-          <span>{obj.name}</span>
+        <Link to={`/product/${obj._id}`}>{obj.name}</Link>
           <i className="fa-regular fa-heart hover:text-red-600 hover:scale-110" onClick={addtoWishlist}/>
         </p>
       
