@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ProductsDropdown from "./ProductsDropdown";
 
 export default function Header({ logo }) {
   const items = useSelector((state) => state.cart.items);
@@ -56,28 +57,6 @@ export default function Header({ logo }) {
 }
 
 function Sidebar({ isOpen, toggleSidebar }) {
-
-
-  
-  const men = {
-    topwear: ["shirts", "tshirts"],
-    bottomwear: ["jeans", "trousers", "joggers", "cargos"],
-    inners: ["boxers","brief","tank"],
-    footwear: ["shoes", "sandals", "slides"],
-  }
-  const women = {
-    topwear: ["croptops", "sleeveless", "shirts", "traditional"],
-    bottomwear: ["leggings", "trousers", "jeans", "skirts"],
-    inners: ["brief", "bra/panty", "slips"],
-    footwear: ["shoes", "sandals", "slides"],
-  }
- const kids= {
-    boys: ["shirts", "trousers", "traditional"],
-    girls: ["shirts", "trousers", "traditional"],
-    babies: ["combos", "underwear"],
-  }
-
-
   const items = useSelector((state) => state.cart.items);
   return (
     <aside
@@ -86,12 +65,20 @@ function Sidebar({ isOpen, toggleSidebar }) {
       }`}
     >
       <div className="p-4 flex justify-between items-start bg-blue-500 text-white">
+
+
+
         <h2>MENU</h2>
         <button onClick={toggleSidebar} className="text-white">
           X
         </button>
       </div>
+
+
+
+
       <div className="p-4">
+      <ProductsDropdown/>
         
         <ul className="flex flex-col gap-4 items-start mb-2 font-semibold">
           <li className="">
@@ -124,40 +111,6 @@ function Sidebar({ isOpen, toggleSidebar }) {
         </ul>
 <hr />
 
-        <div className="flex flex-col gap-2 mb-1">
-              <h3 className="text-xl my-1 font-bold text-blue-800">Men</h3>
-              <div className="flex flex-col gap-2">
-              {
-                    Object.entries(men).map((e, index)=>{
-                      return <Dropdown key={e[index]} title={e[0]} text={e[1]} url={`/products/men/${e[0]}`}/>
-                    })
-              }                
-              </div>                
-        </div>
-        <hr />
-        <div className="flex flex-col gap-2 mb-1">
-              <h3 className="text-xl my-1 font-bold text-blue-800">Women</h3>
-              <div className="flex flex-col gap-2">
-              {
-                    Object.entries(women).map((e, index)=>{
-                      return <Dropdown key={index} title={e[0]} text={e[1]} url={`/products/women/${e[0]}`}/>
-                    })
-              }                
-              </div>                
-        </div>
-        <hr />
-        <div className="flex flex-col gap-2 mb-1">
-              <h3 className="text-xl my-1 font-bold text-blue-800">Kids</h3>
-              <div className="flex flex-col gap-2">
-              {
-                    Object.entries(kids).map((e, index)=>{
-                      return <Dropdown key={e[index]} title={e[0]} text={e[1]} url={`/products/kids/${e[0]}`}/>
-                    })
-              }                
-              </div>                
-        </div>
-        <hr />
-
 
       </div>
     </aside>
@@ -165,28 +118,3 @@ function Sidebar({ isOpen, toggleSidebar }) {
 }
 
 
-
-function Dropdown({title , text, url}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="flex flex-col gap-2">
-      <button className="flex gap-4 items-center justify-between font-bold" onClick={() => setIsOpen(!isOpen)}>
-        <span>{title}</span>
-        <i className="fa-solid fa-chevron-down"></i>
-      </button>
-
-      {isOpen && (
-        <div className={`flex flex-col gap-2 transition-all ease-in-out duration-1000 overflow-hidden`}>
-         {
-          text.map((e, index)=>{
-            return  <Link key={index} className="capitalize text-sm"  to={`${url}/${e}`}>{e}</Link>
-          })
-         }
-          
-        </div>
-      )}
-    </div>
-    
-  );
-}

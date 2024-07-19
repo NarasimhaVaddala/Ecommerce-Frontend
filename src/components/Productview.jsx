@@ -72,11 +72,11 @@ export default function DetailedProductView()
             {/* Content Which will go To right according to grid*/}
             <div>         
                   <h2 className="text-2xl font-bold">{data.name}</h2>
-                  <p className="font-semibold">{data.brand}</p>
+                  <p className="font-semibold text-gray-600">{data.brand}</p>
                   <p>{data.description}</p>
                   <h2 className="text-2xl font-bold my-2">₹ {data.price}/-</h2>
                   <p>Inclusive of all Taxes</p>
-                  <hr />
+                  <hr className="mb-2"/>
 
                   <h2 className="text-xl font-bold">Select Size</h2>
                 {/* Size Radio Buttons will fetch according to data from api, Button will be Diabled if That stock less Than Zero */}            
