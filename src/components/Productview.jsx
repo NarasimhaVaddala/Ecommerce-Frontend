@@ -32,7 +32,7 @@ export default function DetailedProductView()
 //Function to Add Item to Cart
   const AddtoCart = () => {
     if (!selectedSize) toast.warn("Please Select Size")
-    if (items.find(e => e._id === id))toast.info("This item is already added to cart")     
+    else if (items.find(e => e._id === id))toast.info("This item is already added to cart")     
     else if (items.length >= 9) toast.error("Cart is Full")
     else{
       dispatch(add({ ...data, size: selectedSize, qty:1 }));

@@ -24,12 +24,12 @@ export default function Header({ logo }) {
         <ul className="hidden lg:flex">
           <li className="mx-4">
             <Link to="/">
-            <i class="fa-solid fa-house fa-lg"></i>
+            <i className="fa-solid fa-house fa-lg"></i>
             </Link>
           </li>
           <li className="mx-4">
             <Link to="/profile">
-            <i class="fa-solid fa-user-circle fa-lg"></i>
+            <i className="fa-solid fa-user-circle fa-lg"></i>
             </Link>
           </li>
          

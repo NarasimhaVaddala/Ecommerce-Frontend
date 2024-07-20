@@ -11,6 +11,8 @@ import UserContext from "./app/context";
 import Loader from './components/Loader';
 import Dropdown from "./components/Dropdown";
 import Addproduct from './components/AddProduct'
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
@@ -23,6 +25,8 @@ export default function App() {
         {loading && <Loader />}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/products/:gender/:category" element={<Products />} />
           <Route path="/products/:gender/:category/:type" element={<Products />} />
           <Route path="/product/:id" element={<Productview />} />

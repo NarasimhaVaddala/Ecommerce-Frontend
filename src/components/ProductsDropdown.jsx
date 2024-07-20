@@ -14,7 +14,7 @@ export default function ProductsDropdown() {
   const women = {
     topwear: ["croptops", "sleeveless", "shirts", "traditional"],
     bottomwear: ["leggings", "trousers", "jeans", "skirts"],
-    inners: ["brief", "bra/panty", "slips"],
+    inners: ["brief", "bra-panty", "slips"],
     footwear: ["shoes", "sandals", "slides"],
   };
   const kids = {
@@ -76,9 +76,9 @@ function MainDropdown({ obj , title}) {
     <div className="flex flex-col gap-1 mb-2">
       <h3 className="text-xl font-bold text-blue-800 capitalize">{title}</h3>
       <div className="flex flex-col gap-2">
-        {Object.entries(obj).map((e) => {
+        {Object.entries(obj).map((e,index) => {
             return (
-                <Dropdown title={e[0]} text={e[1]} url={`/products/${title}/${e[0]}`} />
+                <Dropdown key={index} title={e[0]} text={e[1]} url={`/products/${title}/${e[0]}`} />
             );
         })}
       </div>
