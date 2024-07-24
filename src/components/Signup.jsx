@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [open, setopen] = useState(false);
+  const navigate = useNavigate()
 
   const onSubmit = (data) => {
     const toastId = toast.loading("Logging in...");
@@ -15,6 +16,11 @@ export default function Signup() {
     axios.post('https://ecommerce-backend-ecru-mu.vercel.app/auth/signup', data)
       .then((res) => {
         console.log(res.data);
+        
+      localStorage.setItem('token' , res.data.token)
+      localStorage.setItem('cart' , JSON.stringify(res.data.user.cart))
+
+      
         toast.update(toastId, {
           render: "Signup successful!",
           type: "success",
@@ -22,6 +28,8 @@ export default function Signup() {
           autoClose: 2000
         });
       })
+
+      return navigate('/')
       .catch((err) => {
        
          toast.update(toastId, {

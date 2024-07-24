@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [open, setopen] = useState(false);
+  const navigate = useNavigate()
 
   const onSubmit = (data) => {
     const toastId = toast.loading("Logging in...");
@@ -24,6 +25,8 @@ export default function Login() {
           autoClose: 2000
         });
       })
+      return navigate('/')
+      
       .catch((err) => {
         
 
