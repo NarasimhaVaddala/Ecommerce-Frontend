@@ -46,9 +46,9 @@ export default function Header({ logo }) {
             </Link>
           </li>
          {token && <li className="mx-4">
-            <Link onClick={handleLogout}>
+            <button onClick={handleLogout}>
             Logout
-            </Link>
+            </button>
           </li>}
          
           <li className="mx-4">
@@ -143,9 +143,9 @@ function Sidebar({ isOpen, toggleSidebar }) {
 
 
           {token && <li className="mx-4">
-            <Link onClick={handleLogout}>
+            <button onClick={handleLogout}>
             Logout
-            </Link>
+            </button>
           </li>}
         </ul>
 <hr />
