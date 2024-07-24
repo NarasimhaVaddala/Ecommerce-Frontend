@@ -21,15 +21,15 @@ export default function Signup() {
       localStorage.setItem('cart' , JSON.stringify(res.data.user.cart))
 
       
-        toast.update(toastId, {
-          render: "Signup successful!",
-          type: "success",
-          isLoading: false,
-          autoClose: 2000
-        });
+      toast.update(toastId, {
+        render: "Signup successful!",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000
+      });
+      return navigate('/')
       })
 
-      return navigate('/')
       .catch((err) => {
        
          toast.update(toastId, {

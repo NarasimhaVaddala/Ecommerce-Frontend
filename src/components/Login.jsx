@@ -18,14 +18,14 @@ export default function Login() {
     .then((res) => {
       localStorage.setItem('token' , res.data.token)
       localStorage.setItem('cart' , JSON.stringify(res.data.user.cart))
-        toast.update(toastId, {
-          render: "Login successful!",
-          type: "success",
-          isLoading: false,
-          autoClose: 2000
-        });
-      })
+      toast.update(toastId, {
+        render: "Login successful!",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000
+      });
       return navigate('/')
+      })
       
       .catch((err) => {
         
