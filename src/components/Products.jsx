@@ -12,10 +12,17 @@ export default function Products() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.products.items);  
 
-  useEffect(() => {
+
+  async function getData(){
     value.setLoading(true)    
-    dispatch(getProducts({gender , category , type}))
+    await dispatch(getProducts({gender , category , type}))
     value.setLoading(false)
+  } 
+
+  useEffect(() => {
+    
+getData()
+
   }, [gender , category,type]);
 
   
