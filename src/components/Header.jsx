@@ -81,6 +81,9 @@ export default function Header({ logo }) {
 }
 
 function Sidebar({ isOpen, toggleSidebar }) {
+
+ 
+
   const items = useSelector((state) => state.cart.items);
   const handleLogout = ()=>{
     localStorage.clear()

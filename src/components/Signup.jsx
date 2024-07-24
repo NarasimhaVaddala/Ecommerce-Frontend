@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState , useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,19 +12,25 @@ export default function Signup() {
   const navigate = useNavigate()
   const value = useContext(UserContext)
 
+  useEffect(()=>{
+    let token = localStorage.getItem('token')
+    if (token) {
+      return navigate('/')
+    }
+    
+  },[])
+
+
   const onSubmit = async(data) => {
-    value.setLoading(true)
     const toastId = toast.loading("Logging in...");
-    console.log(toastId);
+    value.setLoading(true)
+    
     await axios.post('https://ecommerce-backend-ecru-mu.vercel.app/auth/signup', data)
     .then((res) => {
       
-      console.log(res.data);
-      
       localStorage.setItem('token' , res.data.token)
       localStorage.setItem('cart' , JSON.stringify(res.data.user.cart))
-      value.setLoading(false)
-      
+      value.setLoading(false)    
       
       toast.update(toastId, {
         render: "Signup successful!",
@@ -33,9 +39,7 @@ export default function Signup() {
         autoClose: 2000
       });
       return navigate('/')
-    })
-    
-    .catch((err) => {
+    }).catch((err) => {
         value.setLoading(false)
        
          toast.update(toastId, {
