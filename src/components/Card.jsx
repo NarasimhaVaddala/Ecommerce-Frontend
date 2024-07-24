@@ -1,15 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addToWishlist as add } from "../features/wishlist/wishSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
+const token = localStorage.getItem('token')
+
+
 export default function Card({ obj })
  {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const addtoWishlist = async() => {
-   await dispatch(add(obj._id))
+
+    if (!token)return navigate('/login')   
+
+    await dispatch(add(obj._id))
     toast.success("Added To Wishlist");
   };
 

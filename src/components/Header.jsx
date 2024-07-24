@@ -1,16 +1,29 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProductsDropdown from "./ProductsDropdown";
+
+
+
+
+const token = localStorage.getItem('token')
+
+
 
 export default function Header({ logo }) {
   const items = useSelector((state) => state.cart.items);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate()
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+
+  const handleLogout = ()=>{
+    localStorage.clear()
+    return navigate('/')
+  }
 
 
   
@@ -32,14 +45,23 @@ export default function Header({ logo }) {
             <i className="fa-solid fa-user-circle fa-lg"></i>
             </Link>
           </li>
+         {token && <li className="mx-4">
+            <Link onClick={handleLogout}>
+            Logout
+            </Link>
+          </li>}
          
           <li className="mx-4">
-            <Link to="/cart" className="relative">
+            {token && <Link to="/cart" className="relative">
               <i className="fa-solid fa-cart-shopping fa-lg"></i>
               <span className="absolute top-[-12px] left-[10px] bg-red-600 p-1 rounded-full h-4 w-4 text-lg  flex justify-center items-center">
                 {items.length}
               </span>
-            </Link>
+            </Link>}
+            
+            {!token && <Link to="/login" className="relative">
+             Login
+            </Link>}
           </li>
         </ul>
 
@@ -60,6 +82,11 @@ export default function Header({ logo }) {
 
 function Sidebar({ isOpen, toggleSidebar }) {
   const items = useSelector((state) => state.cart.items);
+  const handleLogout = ()=>{
+    localStorage.clear()
+    return navigate('/')
+  }
+
   return (
     <aside
       className={`z-40 fixed top-0 left-0 h-full w-64 bg-white shadow-md transform transition-transform duration-300 ${
@@ -99,17 +126,24 @@ function Sidebar({ isOpen, toggleSidebar }) {
             </Link>
           </li>
           <li className="">
-            <Link to="/cart" className="relative"   onClick={toggleSidebar}>
+
+          {token && <Link to="/cart" className="relative"   onClick={toggleSidebar}>
               <span className="mr-2">cart</span>
-            </Link>
+            </Link>}
+
+          {!token && <Link to="/login" className="relative"   onClick={toggleSidebar}>
+              <span className="mr-2">Login</span>
+            </Link>}
+
+            
           </li>
 
 
-          <li className="">
-            <Link to="/" className="text-lg"   onClick={toggleSidebar}>
-              logout
+          {token && <li className="mx-4">
+            <Link onClick={handleLogout}>
+            Logout
             </Link>
-          </li>
+          </li>}
         </ul>
 <hr />
 

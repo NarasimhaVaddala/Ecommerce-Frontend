@@ -14,7 +14,7 @@ const initialState = {
 const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
-  console.log(product);
+ 
   const res = await axios.post(`${url}/cart`, product, {
     headers: {
       token: token
