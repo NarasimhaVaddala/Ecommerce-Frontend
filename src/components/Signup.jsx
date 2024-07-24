@@ -1,25 +1,30 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import UserContext from '../app/context';
 
 export default function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [open, setopen] = useState(false);
   const navigate = useNavigate()
+  const value = useContext(UserContext)
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
+    value.setLoading(true)
     const toastId = toast.loading("Logging in...");
     console.log(toastId);
-    axios.post('https://ecommerce-backend-ecru-mu.vercel.app/auth/signup', data)
-      .then((res) => {
-        console.log(res.data);
-        
+    await axios.post('https://ecommerce-backend-ecru-mu.vercel.app/auth/signup', data)
+    .then((res) => {
+      
+      console.log(res.data);
+      
       localStorage.setItem('token' , res.data.token)
       localStorage.setItem('cart' , JSON.stringify(res.data.user.cart))
-
+      value.setLoading(false)
+      
       
       toast.update(toastId, {
         render: "Signup successful!",
@@ -28,9 +33,10 @@ export default function Signup() {
         autoClose: 2000
       });
       return navigate('/')
-      })
-
-      .catch((err) => {
+    })
+    
+    .catch((err) => {
+        value.setLoading(false)
        
          toast.update(toastId, {
           render: err.message=="Request failed with status code 409"?"User already exists please login":"Something Went Wrong",

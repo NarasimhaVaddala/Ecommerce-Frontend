@@ -1,9 +1,12 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
+import UserContext from '../app/context';
+
+
 
 
 
@@ -11,13 +14,19 @@ export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [open, setopen] = useState(false);
   const navigate = useNavigate()
+  const value = useContext(UserContext) 
 
-  const onSubmit = (data) => {
+  const onSubmit =async (data) => {
+
+
     const toastId = toast.loading("Logging in...");
-    axios.post('https://ecommerce-backend-ecru-mu.vercel.app/auth/login', data)
+    value.setLoading(true)
+    value.setLoading(true)
+   await axios.post('https://ecommerce-backend-ecru-mu.vercel.app/auth/login', data)
     .then((res) => {
       localStorage.setItem('token' , res.data.token)
       localStorage.setItem('cart' , JSON.stringify(res.data.user.cart))
+      value.setLoading(false)
       toast.update(toastId, {
         render: "Login successful!",
         type: "success",
@@ -25,9 +34,10 @@ export default function Login() {
         autoClose: 2000
       });
       return navigate('/')
-      })
-      
-      .catch((err) => {
+    })
+    
+    .catch((err) => {
+        value.setLoading(false)
         
 
         toast.update(toastId, {
