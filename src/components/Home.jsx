@@ -114,6 +114,8 @@ function Categorysection({ gender, list }) {
 
 function Homecard({ price, img, category, url, brand, name }){
 
+  console.log(url);
+
   return (
     <div
       className={`flex flex-col mt-4 md:h-96  hover:cursor-pointer transition ease-in-out duration-300 ${

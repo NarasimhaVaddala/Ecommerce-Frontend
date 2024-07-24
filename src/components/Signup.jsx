@@ -16,7 +16,7 @@ export default function Signup() {
       .then((res) => {
         console.log(res.data);
         toast.update(toastId, {
-          render: "Login successful!",
+          render: "Signup successful!",
           type: "success",
           isLoading: false,
           autoClose: 2000
@@ -25,7 +25,7 @@ export default function Signup() {
       .catch((err) => {
        
          toast.update(toastId, {
-           render: err.message,
+          render: err.message=="Request failed with status code 409"?"User already exists please login":"Something Went Wrong",
            type: "error",
            isLoading: false,
            autoClose: 2000
@@ -57,7 +57,7 @@ export default function Signup() {
                 
                 <input
                   id={e.name}
-                  className='text-lg border-[1px] border-black w-full p-2'
+                  className='text-lg border-[1px] border-black w-full p-2 rounded-md'
                   type={e.type}
                   placeholder={e.name.replace('_',' ')}
                   {...register(`${e.name}`, { required: true })}
@@ -71,10 +71,17 @@ export default function Signup() {
           <Eye setopen={setopen} open={open} />
           <input
             id='password'
-            className='text-lg border-[1px] border-black w-full p-2'
+            className='text-lg border-[1px] border-black w-full p-2 rounded-md'
             type={open ? 'text' : 'password'}
             placeholder='password'
-            {...register("password", { required: {value:true , message:"This Field is required"} , minLength:{value:8 , message:"Pasword should be atleast 8 charecters Long"} })}
+            {...register("password", { required: {value:true , message:"This Field is required"} , minLength:{value:8 , message:"Pasword should be atleast 8 charecters Long" , minLength:{value:8, message:"Password must be atleast 8 charecters Long" ,
+
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                message: "Password must contain at least 1 capital letter, 1 small letter, 1 numeric digit, and 1 special character"
+              }
+
+             } } })}
           />
           {errors.password && (<span className="text-red-600">{errors.password.message}</span>)}
         </div>
@@ -85,7 +92,7 @@ export default function Signup() {
 
     
 
-        <input type="submit" className='border-[1px] border-black w-full my-1 p-2 font-bold cursor-pointer bg-blue-500 text-white hover:bg-blue-700' />
+        <input type="submit" className='rounded-md w-full my-1 p-2 font-bold cursor-pointer bg-blue-500 text-white hover:bg-blue-700' />
       </form>
       <p>Already have an account ? <Link to='/login' className='text-blue-800'>Login</Link></p>
 

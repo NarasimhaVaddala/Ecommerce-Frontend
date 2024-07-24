@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { del as delwish } from "../features/wishlist/wishSlice";
+import { delWishlist as delwish, getWishlist } from "../features/wishlist/wishSlice";
 export default function Profile() {
   const navigate = useNavigate();
 
@@ -10,6 +10,8 @@ export default function Profile() {
     return navigate("/");
   }
   
+
+
  return (
     <>
       <div className="container grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
@@ -194,34 +196,54 @@ function Address() {
 
 function Cartcard({obj}) {
 
+
+  useEffect(()=>{
+    dispatch(getWishlist())
+  },[])
+  
+
   
  const dispatch = useDispatch()
-  return (
-    <div className="flex border-[1px] p-2 mb-1">
 
-      <div className="cartimg flex h-28 w-28  ">
-        <img src={obj.image}  alt="Image" className="h-[100%] w-[70%]" />
+ const delWish = async()=>{
+  await dispatch(delwish(obj._id))
+  await dispatch(getWishlist())
+ }
+  return (
+    <div className="flex border-[1px] p-2 mb-1 gap-4">
+
+      <div className="cartimg flex h-28 w-28">
+        <Link to={`/product/${obj._id}`} className="h-[100%] w-[100%]">
+        <img src={obj.image}  alt="Image" className="h-[100%] w-[100%]" />
+        </Link>
       </div>
 
-      <div className="content">
+      <div className="content w-full">
         <div className="flex justify-between w-full">
-        <h3 className="text-xl">{obj.brand}</h3>
-        <button onClick={() => dispatch(delwish(obj._id))} className="text-sm">
+          <Link to={`/product/${obj._id}`}>
+        <h3 className="text-xl font-bold">{obj.name}</h3>
+          </Link>
+        <button onClick={delWish} className="text-sm">
             <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
           </button>
 
         </div>
         
-        <p className="text-slate-800">{obj.name}</p>
-        <p>Status : Delivered</p>
-        <p>View Details</p>
+        <p className="text-slate-800">by {obj.brand}</p>
+        <p className="text-slate-800">{obj.description}</p>
+        <h3 className="text-slate-800 text-xl font-bold">{obj.price}</h3>
       </div>
     </div>
   );
 }
 
 function Wishlist() {
+  const dispatch =  useDispatch()
 
+  useEffect(()=>{
+    dispatch(getWishlist())
+    console.log();
+  },[])
   const items = useSelector((state)=>state.wish.wishlist)
   console.log(items);
   return (
@@ -229,7 +251,7 @@ function Wishlist() {
       <h2 className="text-2xl my-1">Wishlist</h2>
       <hr className="mb-4" />
       {
-        items.map(e=><Cartcard key={e._id} obj={e} />)
+        items.map(e=><Cartcard key={e._id} obj={e.productId} />)
       }
     </>
   );

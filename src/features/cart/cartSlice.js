@@ -1,85 +1,184 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+let token = localStorage.getItem('token');
+console.log(token);
 
 const initialState = {
   items: [],
+  loading: false,
+  error: "",
   priceDetails:{}
-  
 };
 
+const url = `http://localhost:3000/products`;
 
-
-function calculatePrice(arr){
-    if (!arr) {
-      return
+export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
+  console.log(product);
+  const res = await axios.post(`${url}/cart`, product, {
+    headers: {
+      token: token
     }
-    else{
-      const priceForItems =  arr.reduce((acc, cur, index, arr) => {return acc +( cur.price*cur.qty)},0);
-      let totalPrice = 0
-      let packagingFee = 59
-      let deliveryCharges = 0 
-    
-      if (priceForItems >= 499 ) {        
-        deliveryCharges = 0;
-        totalPrice = priceForItems + packagingFee + deliveryCharges
-        return {totalPrice , priceForItems , packagingFee , deliveryCharges}
-        
-      }
-      else{
-        
-        deliveryCharges = 49;
-        totalPrice = priceForItems + packagingFee + deliveryCharges
-        return {totalPrice , priceForItems , packagingFee , deliveryCharges}
-      }
-    }
+  });
+  return res.data.data;
+});
 
+export const getCart = createAsyncThunk('cart/getCart', async () => {
+  const res = await axios.get(`${url}/cart`, {
+    headers: {
+      token: token
+    }
+  });
+  console.log("cart here", res.data.cart);
+  return res.data.cart;
+});
+
+
+
+
+export const decreaseQuantity =createAsyncThunk('/cart/decrease' , async(product)=>{
+  const res = await axios.put(`${url}/cart/decrease`, product,{
+    headers: {
+      token: token
+    }
+  });
+  console.log(res.data);
+  return res.data;
+})
+
+
+
+export const deleteItemFromCart = createAsyncThunk('/cart/delete' , async(product)=>{
+
+  console.log(product);
+
+  const res = await axios.delete(`${url}/cart/delete`,{
+    headers: {
+      token: token
+    },
+
+    data: { productId: product.productId, size: product.size }
+  });
+  console.log(res.data);
+  return res.data;
+})
+
+function calculatePrice(arr) {
+  if (!arr) {
+    return;
+  } else {
+
+console.log("arr" , arr);
+
+  
+    const priceForItems = arr.reduce((acc, item) => {
+
+return acc + (item.productId.price * item.quantity)}, 0);
+
+    let totalPrice = 0;
+    let packagingFee = 59;
+    let deliveryCharges = 0;
+
+    if (priceForItems >= 499) {
+      deliveryCharges = 0;
+      totalPrice = priceForItems + packagingFee + deliveryCharges;
+      console.log(totalPrice, priceForItems, packagingFee, deliveryCharges);
+      return { totalPrice, priceForItems, packagingFee, deliveryCharges };
+    } else {
+      deliveryCharges = 49;
+      totalPrice = priceForItems + packagingFee + deliveryCharges;
+      console.log(totalPrice, priceForItems, packagingFee, deliveryCharges);
+      return { totalPrice, priceForItems, packagingFee, deliveryCharges };
+    }
+  }
 }
 
 export const cartSlice = createSlice({
   name: "cartItems",
   initialState,
-
   reducers: {
-    add: (state, action) => { 
-      
+    add: (state, action) => {
       let alreadyThere = state.items.find((e) => e._id === action.payload._id);
-      
       if (!alreadyThere) {
         state.items.push(action.payload);
-        state.priceDetails = calculatePrice(state.items)  
+        state.priceDetails = calculatePrice(state.items);
       }
     },
-    
-    del :(state,action)=>{
-      state.items = state.items.filter(e=>e._id!=action.payload.id)
-      state.priceDetails = calculatePrice(state.items)
-    },
-    
-    qty:(state,action)=>{
-      let item = state.items.find(e => e._id === action.payload.id);
-      item.qty = action.payload.qty;  
-      state.priceDetails = calculatePrice(state.items)     
-     }
+    del: (state, action) => {
+      state.items = state.items.filter(e => e._id !== action.payload.id);
+      state.priceDetails = calculatePrice(state.items);
+    }
   },
+  extraReducers: (builder) => {
+    builder.addCase(addToCart.fulfilled, (state, action) => {
+      
+      state.priceDetails = calculatePrice(state.items);
+      state.loading = false;
+      state.error = "";
+    });
+    builder.addCase(addToCart.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(addToCart.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
+
+
+
+
+    builder.addCase(getCart.fulfilled, (state, action) => {
+      state.items = action.payload;
+      state.priceDetails = calculatePrice(state.items);
+      state.loading = false;
+      state.error = "";
+    });
+    builder.addCase(getCart.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getCart.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    });
+
+
+
+    builder.addCase(decreaseQuantity.fulfilled , (state,action)=>{
+      
+      state.priceDetails = calculatePrice(state.items);
+      state.loading = false
+      state.error = ""
+    });
+
+    builder.addCase(decreaseQuantity.pending , (state,action)=>{
+      state.loading = true
+    })
+
+    builder.addCase(decreaseQuantity.rejected , (state,action)=>{
+      state.loading = false
+      state.error = action.error.message
+    })
+
+
+    
+    builder.addCase(deleteItemFromCart.fulfilled , (state,action)=>{
+      state.priceDetails = calculatePrice(state.items);
+      state.loading = true
+      state.error = ""
+    });
+
+    builder.addCase(deleteItemFromCart.pending , (state,action)=>{
+      state.loading = true
+    })
+
+    builder.addCase(deleteItemFromCart.rejected , (state,action)=>{
+      state.loading = false
+      state.error = action.error.message
+    })
+
+  }
 });
 
+export const { add, del } = cartSlice.actions;
 
-export const { add,del,qty } = cartSlice.actions
-
-export default cartSlice.reducer
-
-
-
-
-
-// brand:"Marvel"
-// category:"Topwear"
-// color:"white"
-// description:"High-quality shirt "
-// gender:"men"
-// image:"https://images.bewakoof.com/t640/men-s-white-wander-geometry-graphic-printed-oversized-t-shirt-519178-1708612769-1.jpg"
-// name:"Men Fucking Tshirt"
-// price:399
-// size:{S: 0, M: 10, L: 10, XL: 10, XXL: 10}
-// type:"shirts"
-// __v:0
-// _id:"669759601c667bd4c11af5c0"
+export default cartSlice.reducer;

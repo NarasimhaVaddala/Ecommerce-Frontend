@@ -12,7 +12,7 @@ export default function ProductsDropdown() {
     footwear: ["shoes", "sandals", "slides"],
   };
   const women = {
-    topwear: ["croptops", "sleeveless", "shirts", "traditional"],
+    topwear: ["croptops", "sleeveless", "shirts", "traditional" ,"tshirts"],
     bottomwear: ["leggings", "trousers", "jeans", "skirts"],
     inners: ["brief", "bra-panty", "slips"],
     footwear: ["shoes", "sandals", "slides"],

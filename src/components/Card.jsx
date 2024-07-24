@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { add } from "../features/wishlist/wishSlice";
+import { addToWishlist as add } from "../features/wishlist/wishSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
@@ -8,8 +8,8 @@ export default function Card({ obj })
  {
   const dispatch = useDispatch();
 
-  const addtoWishlist = () => {
-    dispatch(add(obj))
+  const addtoWishlist = async() => {
+   await dispatch(add(obj._id))
     toast.success("Added To Wishlist");
   };
 

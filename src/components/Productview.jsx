@@ -2,15 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
-import { add } from "../features/cart/cartSlice";
-import { add as wishadd } from "../features/wishlist/wishSlice";
+import { addToCart, getCart } from "../features/cart/cartSlice";
+import { addToWishlist as add } from "../features/wishlist/wishSlice";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../app/context";
 
+
 export default function DetailedProductView() 
 {
   const items = useSelector((state) => state.cart.items);
+  // console.log(items , " Items inside Cart");
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState("");
   const { id } = useParams();
@@ -23,19 +25,21 @@ export default function DetailedProductView()
   //Function To add Item to Wishlist
   const addtoWishlist = () => {
     if (!data) toast.error("Something Went Wrong! Please Try Later");
-    else {dispatch(wishadd(data));toast.success("Added To Wishlist")}
+    else {dispatch(add(id));toast.success("Added To Wishlist")}
   };
 
 
 
 
 //Function to Add Item to Cart
-  const AddtoCart = () => {
+  const AddtoCart = async() => {
     if (!selectedSize) toast.warn("Please Select Size")
-    else if (items.find(e => e._id === id))toast.info("This item is already added to cart")     
-    else if (items.length >= 9) toast.error("Cart is Full")
+    // else if (items.find(e => e._id === id))toast.info("This item is already added to cart")     
+    // else if (items.length >= 9) toast.error("Cart is Full")
     else{
-      dispatch(add({ ...data, size: selectedSize, qty:1 }));
+
+      await dispatch(addToCart({ productId:id, quantity:1 ,size:selectedSize}))
+      await dispatch(getCart())
       toast.success("Added To Cart");
       setSelectedSize("");
       

@@ -1,8 +1,9 @@
-import React , { useState} from "react";
+import React , { useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { del, qty as quantity } from "../features/cart/cartSlice";
-import { add as addwish } from "../features/wishlist/wishSlice";
+import { addToCart, decreaseQuantity, deleteItemFromCart, getCart } from "../features/cart/cartSlice";
+import { addToWishlist as addwish, getWishlist } from "../features/wishlist/wishSlice";
 import { toast, ToastContainer } from "react-toastify";
+
 
 
 
@@ -10,6 +11,14 @@ import { toast, ToastContainer } from "react-toastify";
 //Main Page Starts Here
 export default function CartPage() {
   const items = useSelector((state) => state.cart.items); 
+  const dispatch = useDispatch()
+  
+useEffect(()=>{
+  dispatch(getCart())
+},[])
+
+               
+  console.log("cartpage" , items);
   return (
     <>
       {items.length ? (
@@ -92,40 +101,57 @@ function Addressbox() {
 //Card Starts Here
 function Cartcard(props) {
   const { obj } = props;
-  const [qty, setqty] = useState(obj.qty); // initialize with obj.qty
+  const [qty, setqty] = useState(obj.quantity); // initialize with obj.qty
   const dispatch = useDispatch();
 
-  const wishlist = () => {
-    dispatch(addwish(obj));
+  const wishlist = async() => {
+
+    await dispatch(addwish(obj.productId._id));
+    await dispatch(getWishlist())
+
     toast.info("Added to Wishlist");
   };
 
-  const increase = () => {
-    setqty(prevQty => {
-      const newQty = prevQty < 5 ? prevQty + 1 : prevQty;
-      dispatch(quantity({ qty: newQty, id: obj._id }));
-      return newQty;
-    });
+  const increase = async() => {
+
+    if (obj.quantity >= 5) {
+      toast.error("Cannot add More Than 5 quantity")
+    }else{
+      setqty(prevQty => {        
+        const newQty = prevQty < 5 ? prevQty + 1 : prevQty;   
+        dispatch(addToCart({productId:obj.productId._id , quantity:1 , size:obj.size }));
+        dispatch(getCart())       
+  
+        return newQty;
+      });
+    }  
   };
 
   const decrease = () => {
     setqty(prevQty => {
       const newQty = prevQty > 1 ? prevQty - 1 : prevQty;
-      dispatch(quantity({ qty: newQty, id: obj._id }));
+      dispatch(decreaseQuantity({productId: obj.productId._id , size:obj.size }));
+      dispatch(getCart())
       return newQty;
     });
   };
 
+
+  const deleteCart = ()=>{
+    dispatch(deleteItemFromCart({productId: obj.productId._id , size:obj.size }))
+    dispatch(getCart())
+  }
+
   return (
     <div className="flex border p-2 mb-1">
       <div className="flex h-full w-28">
-        <img src={obj.image} alt="image" className="h-full w-full" />
+        <img src={obj.productId.image} alt="image" className="h-full w-full" />
       </div>
       <div className="ml-4 w-full">
         <div className="flex justify-between items-center w-full">
-            <h3 className="font-bold">{obj.name}</h3>
+            <h3 className="font-bold">{obj.productId.name}</h3>
             <div className="flex justify-start gap-x-4 items-center my-1">
-              <button onClick={() => dispatch(del({ id: obj._id }))} className="text-sm">
+              <button onClick={deleteCart} className="text-sm">
                 <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
               </button>
               <span>|</span>
@@ -146,13 +172,11 @@ function Cartcard(props) {
           <button className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full" onClick={increase}>+</button>
         </div>
         {/* Buttons for Increasing or Decreasing the quantity of the product */}
-        <p className="font-bold">₹ {obj.price * qty}/-</p>
+        <p className="font-bold">₹ {obj.productId.price * qty}/-</p>
         
       </div>
     </div>
   );
 }
 //Card Ends Here
-
-
 

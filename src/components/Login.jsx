@@ -1,17 +1,11 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 
-const schema = yup.object().shape({
-  userid: yup.string().email('Invalid email format').required('Email is required'),
-  password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
-});
+
 
 export default function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -19,10 +13,10 @@ export default function Login() {
 
   const onSubmit = (data) => {
     const toastId = toast.loading("Logging in...");
-    console.log(toastId);
     axios.post('http://localhost:3000/auth/login', data)
-      .then((res) => {
-        console.log(res.data);
+    .then((res) => {
+      localStorage.setItem('token' , res.data.token)
+      localStorage.setItem('cart' , JSON.stringify(res.data.user.cart))
         toast.update(toastId, {
           render: "Login successful!",
           type: "success",
@@ -31,9 +25,10 @@ export default function Login() {
         });
       })
       .catch((err) => {
+        
 
         toast.update(toastId, {
-          render: err.message,
+          render: err.message=="Request failed with status code 401"?"Invalid Credentials":"Something Went Wrong",
           type: "error",
           isLoading: false,
           autoClose: 2000
@@ -50,13 +45,13 @@ export default function Login() {
       <h1 className='mt-1 text-3xl font-bold text-blue-800'>LOGIN</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='my-1'>
-          <label htmlFor="email" className='font-bold'>Email</label>
+          <label htmlFor="email" className='font-bold'>Email or Mobile</label>
           <input
             id='email'
-            className='text-lg border-[1px] border-black w-full p-2'
+            className='text-lg border-[1px] border-black w-full p-2 rounded-md '
             type="text"
-            placeholder='email@example.com'
-            {...register("userid")}
+            placeholder='enter email or mobile number'
+            {...register("userid" , {required :{value:true , message:"This is a Required Field"}})}
           />
           {errors.userid && (<span className="text-red-600">{errors.userid.message}</span>)}
         </div>
@@ -66,15 +61,15 @@ export default function Login() {
           <Eye setopen={setopen} open={open} />
           <input
             id='password'
-            className='text-lg border-[1px] border-black w-full p-2'
+            className='text-lg border-[1px] border-black w-full p-2 rounded-md '
             type={open ? 'text' : 'password'}
             placeholder='password'
-            {...register("password")}
+            {...register("password" , {required :{value:true , message:"This is a Required Field"}})}
           />
           {errors.password && (<span className="text-red-600">{errors.password.message}</span>)}
         </div>
 
-        <input type="submit" className='border-[1px] border-black w-full my-1 p-2 font-bold cursor-pointer bg-blue-500 text-white hover:bg-blue-700' />
+        <input type="submit" className=' rounded-md  w-full my-1 p-2 font-bold cursor-pointer bg-blue-500 text-white hover:bg-blue-700' />
       </form>
       <p>Donot have an account  ? <Link to='/signup' className='text-blue-800'>Signup</Link></p>
 
