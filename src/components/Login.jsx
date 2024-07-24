@@ -13,7 +13,7 @@ export default function Login() {
 
   const onSubmit = (data) => {
     const toastId = toast.loading("Logging in...");
-    axios.post('http://localhost:3000/auth/login', data)
+    axios.post('https://ecommerce-backend-ecru-mu.vercel.app/auth/login', data)
     .then((res) => {
       localStorage.setItem('token' , res.data.token)
       localStorage.setItem('cart' , JSON.stringify(res.data.user.cart))
