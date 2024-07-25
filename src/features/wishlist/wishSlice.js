@@ -10,7 +10,7 @@ const initialState = {
   error: ""
 };
 
-const url = `http://localhost:3000/products`;
+const url = `/api/products`;
 
 export const addToWishlist = createAsyncThunk('/wishlist/add', async (productId) => {
   console.log(token, "inside async");
