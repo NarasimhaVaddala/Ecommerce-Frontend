@@ -11,7 +11,9 @@ const initialState = {
   priceDetails:{}
 };
 
-const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
+// const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
+
+const url = "http://localhost:3000/products"
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
  

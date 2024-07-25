@@ -57,7 +57,7 @@ export default function DetailedProductView()
   const getData = async() => {
     value.setLoading(true)
     await axios
-    .get(`https://ecommerce-backend-ecru-mu.vercel.app/products/product/${id}`)
+    .get(`/api/products/product/${id}`)
     .then((res) => setData(res.data.data[0]))
     .catch((err) => toast.error(err.message));
     value.setLoading(false)

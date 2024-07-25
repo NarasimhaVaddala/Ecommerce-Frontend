@@ -1,7 +1,7 @@
 import { createSlice, nanoid , createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
-const url = "https://ecommerce-backend-ecru-mu.vercel.app/products"
+const url = "http://localhost:3000/products"
 
 
 export const getProducts = createAsyncThunk('getProducts' , async({gender , category,type})=>{  
