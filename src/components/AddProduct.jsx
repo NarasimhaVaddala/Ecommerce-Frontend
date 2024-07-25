@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer , toast } from "react-toastify";
-
+// const api = import.meta.env.VITE_API_BASE_URL;
 export default function AddProduct() {
   const [selectedGender, setSelectedGender] = useState(""); // Track selected gender
   const [availableCategories, setAvailableCategories] = useState([]); // Available categories based on gender
@@ -93,7 +93,7 @@ export default function AddProduct() {
 
 
 async function postData(obj){
-            axios.post('/api/products/insert' , obj)
+            axios.post(`https://ecommerce-backend-ecru-mu.vercel.app/products/insert` , obj)
             .then((res)=>{toast.success("Product Added Successfully")}).catch(e=>toast.error(e.message))
 }
 

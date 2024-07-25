@@ -10,7 +10,7 @@ const initialState = {
   error: ""
 };
 
-const url = `/api/products`;
+const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
 
 export const addToWishlist = createAsyncThunk('/wishlist/add', async (productId) => {
   console.log(token, "inside async");

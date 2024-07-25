@@ -1,7 +1,10 @@
 import { createSlice, nanoid , createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+// const api = import.meta.env.VITE_API_BASE_URL;
 
-const url = "/api/products"
+
+
+const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`
 
 
 export const getProducts = createAsyncThunk('getProducts' , async({gender , category,type})=>{  

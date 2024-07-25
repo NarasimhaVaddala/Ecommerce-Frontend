@@ -13,7 +13,7 @@ const initialState = {
 
 // const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
 
-const url = "/api/products"
+const url = "https://ecommerce-backend-ecru-mu.vercel.app/products"
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
  
