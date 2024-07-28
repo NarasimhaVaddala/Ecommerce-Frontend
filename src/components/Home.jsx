@@ -114,7 +114,7 @@ function Categorysection({ gender, list }) {
 
 function Homecard({ price, img, category, url, brand, name }){
 
-  console.log(url);
+  // console.log(url);
 
   return (
     <div

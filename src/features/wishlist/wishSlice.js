@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let token = localStorage.getItem('token');
-console.log(token, "from wishSlice");
 
 const initialState = {
   wishlist: [],
@@ -10,20 +8,23 @@ const initialState = {
   error: ""
 };
 
-const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
+const url = `http://localhost:3000/products`;
+// const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
 
 export const addToWishlist = createAsyncThunk('/wishlist/add', async (productId) => {
-  console.log(token, "inside async");
+  let token = await localStorage.getItem('token');
+  
   const res = await axios.post(`${url}/wishlist`, { productId: productId }, {
     headers: {
       token: token
     }
   });
-
+  
   return res.data;
 });
 
 export const delWishlist = createAsyncThunk('/wishlist/delete', async (productId) => {
+  let token = await localStorage.getItem('token');
   console.log(productId);
   const res = await axios.delete(`${url}/wishlist`, {
     headers: {
@@ -31,17 +32,18 @@ export const delWishlist = createAsyncThunk('/wishlist/delete', async (productId
     },
     data: { productId: productId }
   });
-
+  
   return res.data;
 });
 
 export const getWishlist = createAsyncThunk('/wishlist', async () => {
+  let token = await localStorage.getItem('token');
   const res = await axios.get(`${url}/wishlist`, {
     headers: {
       token: token
     }
   });
-
+  
   return res.data.wishlist;
 });
 

@@ -23,7 +23,7 @@ export default function Signup() {
     const toastId = toast.loading("Signing up...");
     value.setLoading(true);
 
-    await axios.post('https://ecommerce-backend-ecru-mu.vercel.app/auth/signup', data)
+    await axios.post('http://localhost:3000/auth/signup', data)
       .then((res) => {
         localStorage.setItem('token', res.data.token);
         value.setLoading(false);

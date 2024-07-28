@@ -1,8 +1,9 @@
-import React , { useEffect, useState} from "react";
+import React , { useContext, useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, decreaseQuantity, deleteItemFromCart, getCart } from "../features/cart/cartSlice";
 import { addToWishlist as addwish, getWishlist } from "../features/wishlist/wishSlice";
 import { toast, ToastContainer } from "react-toastify";
+import UserContext from "../app/context";
 
 
 
@@ -12,16 +13,25 @@ import { toast, ToastContainer } from "react-toastify";
 export default function CartPage() {
   const items = useSelector((state) => state.cart.items); 
   const dispatch = useDispatch()
+  const {setLoading , loading} = useContext(UserContext)
   
 useEffect(()=>{
-  dispatch(getCart())
+
+  (
+    async function(){
+      setLoading(true)
+      await dispatch(getCart())
+      setLoading(false)
+
+    }
+  )()
 },[])
 
                
   console.log("cartpage" , items);
   return (
     <>
-      {items.length ? (
+      {items.length && !loading ? (
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Addressbox />
           <div className="lg:col-span-2 flex flex-col gap-6">
@@ -43,6 +53,9 @@ useEffect(()=>{
 // PriceBox Starts Here
 function Pricebox(props) {  
   const priceDetails = useSelector((state) => state.cart.priceDetails);  
+
+  
+
   return (
     <div className="bg-white p-4 sticky top-4 lg:col-start-3 lg:row-start-1">
       <h2 className="text-lg font-bold ">DETAILS</h2>
@@ -98,48 +111,51 @@ function Addressbox() {
 
 
 //Card Starts Here
-//Card Starts Here
 function Cartcard(props) {
   const { obj } = props;
   const [qty, setqty] = useState(obj.quantity); // initialize with obj.qty
   const dispatch = useDispatch();
+  const { loading , setLoading} = useContext(UserContext)
 
   const wishlist = async() => {
-
-    await dispatch(addwish(obj.productId._id));
-    await dispatch(getWishlist())
-
+  
+    await dispatch(addwish(obj.productId._id));  
+   
     toast.info("Added to Wishlist");
   };
 
   const increase = async() => {
 
-    if (obj.quantity >= 5) {
-      toast.error("Cannot add More Than 5 quantity")
-    }else{
-      setqty(prevQty => {        
-        const newQty = prevQty < 5 ? prevQty + 1 : prevQty;   
-        dispatch(addToCart({productId:obj.productId._id , quantity:1 , size:obj.size }));
-        dispatch(getCart())       
-  
+    if (obj.quantity >= 5) toast.error("Cannot add More Than 5 quantity")
+      else{
+      setLoading(true)
+      await dispatch(addToCart({productId:obj.productId._id , quantity:1 , size:obj.size }));
+      await dispatch(getCart())       
+       setqty(prevQty => {        
+         const newQty = prevQty < 5 ? prevQty + 1 : prevQty;      
         return newQty;
       });
+      setLoading(false)
     }  
   };
 
-  const decrease = () => {
-    setqty(prevQty => {
+  const decrease = async() => {
+    setLoading(true)
+    await dispatch(decreaseQuantity({productId: obj.productId._id , size:obj.size }));
+    await dispatch(getCart())
+ setqty(prevQty => {
       const newQty = prevQty > 1 ? prevQty - 1 : prevQty;
-      dispatch(decreaseQuantity({productId: obj.productId._id , size:obj.size }));
-      dispatch(getCart())
       return newQty;
     });
+    setLoading(false)
   };
 
 
-  const deleteCart = ()=>{
-    dispatch(deleteItemFromCart({productId: obj.productId._id , size:obj.size }))
-    dispatch(getCart())
+  const deleteCart = async()=>{
+    setLoading(true)
+     await dispatch(deleteItemFromCart({productId: obj.productId._id , size:obj.size }))
+     await dispatch(getCart())
+    setLoading(false)
   }
 
   return (
@@ -169,7 +185,7 @@ function Cartcard(props) {
 
           <button className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full" onClick={decrease}>-</button>
           <span>{qty}</span>
-          <button className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full" onClick={increase}>+</button>
+          <button disabled={qty==5} className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full disabled:border-gray-500" onClick={increase}>+</button>
         </div>
         {/* Buttons for Increasing or Decreasing the quantity of the product */}
         <p className="font-bold">₹ {obj.productId.price * qty}/-</p>

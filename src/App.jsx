@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
@@ -11,31 +11,30 @@ import Loader from './components/Loader';
 import Addproduct from './components/AddProduct'
 import Login from "./components/Login";
 import Signup from "./components/Signup";
-import { UserProvider } from './app/context.jsx';
+import UserContext from "./app/context";
+
 
 export default function App() {
-  const [loading, setLoading] = useState(false);
-  const [login,setlogin] = useState(false)
+  // const [loading, setLoading] = useState(false);
   const token = localStorage.getItem('token')
-  
-  const isLogin = ()=>{
-    if (token) {
-        setlogin(true)
-    }
-    else{
-      setlogin(false)
-    }
-  }
 
+  const {loading ,setLoading , isAuthenticated, setIsAuthenticated} = useContext(UserContext)
 
   useEffect(()=>{
-        isLogin()
-  },[token, login])
+      if (token) {
+        setIsAuthenticated(true)
+        
+      }
+      else{
+        setIsAuthenticated(false)
+      }
+  },[])
+  
+  
 
 
   return (
     <>
-      <UserProvider>
       <Header logo="/NC2.png" />
       {/* <ProductsDropdown/> */}
         {loading && <Loader />}
@@ -46,12 +45,11 @@ export default function App() {
           <Route path="/products/:gender/:category" element={<Products />} />
           <Route path="/products/:gender/:category/:type" element={<Products />} />
           <Route path="/product/:id" element={<Productview />} />
-          <Route path="/profile/*" element={login?<Profile />:<Login/>} />
-          <Route path="/cart" element={login?<CartPage />:<Login/>  } />
+          <Route path="/profile/*" element={isAuthenticated?<Profile />:<Login/>} />
+          <Route path="/cart" element={isAuthenticated?<CartPage />:<Login/>  } />
           <Route path="/add" element={<Addproduct />} />
 
         </Routes>
-      </UserProvider>
       <Footer />
     </>
   );

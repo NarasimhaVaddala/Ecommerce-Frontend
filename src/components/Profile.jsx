@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { delWishlist as delwish, getWishlist } from "../features/wishlist/wishSlice";
+import UserContext from "../app/context";
 export default function Profile() {
   const navigate = useNavigate();
-
-  function handleLogout() {
-    console.log("kadkja");
-    return navigate("/");
-  }
   
+  const { isAuthenticated, logout } = useContext(UserContext);
 
 
  return (
@@ -21,13 +18,13 @@ export default function Profile() {
           <hr />
           <Link to="account">Account Settings</Link>
           <hr />
-          <Link to="address">Address</Link>
-          <hr />
+          {/* <Link to="address">Address</Link>
+          <hr /> */}
           <Link to="wishlist">Wishlist</Link>
           <hr />
-          <Link to="/" onClick={handleLogout}>
+          <button  onClick={logout}>
             Logout
-          </Link>
+          </button>
         </div>
 
         <div
@@ -38,7 +35,7 @@ export default function Profile() {
             <Route path="" element={<Orders />} />
             <Route path="orders" element={<Orders />} />
             <Route path="account" element={<Account />} />
-            <Route path="address" element={<Address />} />
+            {/* <Route path="address" element={<Address />} /> */}
             <Route path="wishlist" element={<Wishlist />} />
           </Routes>
         </div>
@@ -162,35 +159,24 @@ function Account() {
             onChange={(e) => setdata({ ...data, mobile: e.target.value })}
           />
         </div>
+
+<div>
+          <h3 className="text-xl mb-2">Address</h3>
+  
+<div className="address-card border p-4 mb-4">
+        <p>Narasimha | +91 8978106223</p>
+        <p>Plot Number 474, Hmt Swarnapuri Colony Miyapur Hyderabad</p>
+       
+      </div>
+</div>
+
+
       </div>
     </div>
   );
 }
 
-function Address() {
-  return (
-    <div className="address p-8 bg-white">
-      <h2 className="text-2xl mb-4">Your Addresses</h2>
 
-      <div className="address-card border p-8 mb-4">
-        <p>Narasimha | +91 8978106223</p>
-        <p>Plot Number 474, Hmt Swarnapuri Colony Miyapur Hyderabad</p>
-        <p className="cart-desc btn-group">
-          Delete <i className="fa-regular fa-trash-can"></i> | Edit{" "}
-          <i className="fa-regular fa-edit"></i>
-        </p>
-      </div>
-      <div className="address-card border p-8 mb-4">
-        <p>Narasimha | +91 8978106223</p>
-        <p>Plot Number 474, Hmt Swarnapuri Colony Miyapur Hyderabad</p>
-        <p className="cart-desc btn-group">
-          Delete <i className="fa-regular fa-trash-can"></i> | Edit{" "}
-          <i className="fa-regular fa-edit"></i>
-        </p>
-      </div>
-    </div>
-  );
-}
 
 
 
@@ -275,3 +261,8 @@ function BottomCard() {
     </div>
   );
 }
+
+
+
+
+

@@ -13,23 +13,25 @@ const token = localStorage.getItem('token')
 
 export default function DetailedProductView() 
 {
-  const items = useSelector((state) => state.cart.items);
   const navigate = useNavigate()
-  // console.log(items , " Items inside Cart");
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState("");
   const { id } = useParams();
   const [data, setData] = useState({});
-  const value = useContext(UserContext)
+  const {isAuthenticated , setLoading , loading} = useContext(UserContext)
   
   const handleSizeChange = (event) => setSelectedSize(event.target.value);
 
 
   //Function To add Item to Wishlist
   const addtoWishlist = () => {
-    if(!token)return navigate('/login')
+    if(!isAuthenticated)return navigate('/login')
     if (!data) toast.error("Something Went Wrong! Please Try Later");
-    else {dispatch(add(id));toast.success("Added To Wishlist")}
+    else {
+      setLoading(true)
+      dispatch(add(id));toast.success("Added To Wishlist")
+      setLoading(false)
+    }
   };
 
 
@@ -38,16 +40,17 @@ export default function DetailedProductView()
 //Function to Add Item to Cart
   const AddtoCart = async() => {
     
-    if(!token)return navigate('/login')
+    if(!isAuthenticated)return navigate('/login')
     if (!selectedSize) toast.warn("Please Select Size")
     // else if (items.find(e => e._id === id))toast.info("This item is already added to cart")     
     // else if (items.length >= 9) toast.error("Cart is Full")
     else{
-
+      setLoading(true)
       await dispatch(addToCart({ productId:id, quantity:1 ,size:selectedSize}))
       await dispatch(getCart())
       toast.success("Added To Cart");
       setSelectedSize("");
+      setLoading(false)
       
     }
   };
@@ -55,12 +58,12 @@ export default function DetailedProductView()
 
 //Function to Fetch a single product from Api using Its Id
   const getData = async() => {
-    value.setLoading(true)
+    setLoading(true)
     await axios
-    .get(`https://ecommerce-backend-ecru-mu.vercel.app/products/product/${id}`)
+    .get(`http://localhost:3000/products/product/${id}`)
     .then((res) => setData(res.data.data[0]))
     .catch((err) => toast.error(err.message));
-    value.setLoading(false)
+    setLoading(false)
   };
 
 
@@ -70,7 +73,7 @@ export default function DetailedProductView()
   }, []);
 
   return (
-    <>
+    <>{!loading &&
       
       <div className="container mx-auto p-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -133,6 +136,7 @@ export default function DetailedProductView()
 
 
       </div>
+    }
     </>
   );
 }

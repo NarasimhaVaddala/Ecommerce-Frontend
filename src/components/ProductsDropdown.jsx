@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../app/context";
 
 export default function ProductsDropdown() {
 
+let {loading, setloading} = useContext(UserContext)  
 
 
   const men = {
@@ -25,11 +27,12 @@ export default function ProductsDropdown() {
 
   return (
     <>
-      
+      {!loading && <>
       <MainDropdown obj={men} title="men" />
       <MainDropdown obj={women} title="women" />
       <MainDropdown obj={kids} title="kids" />
-      
+      </>
+      }
       
     </>
   );

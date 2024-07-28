@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-let token = localStorage.getItem('token');
-console.log(token);
 
 const initialState = {
   items: [],
@@ -11,12 +9,15 @@ const initialState = {
   priceDetails:{}
 };
 
-// const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
+const url = `http://localhost:3000/products`;
+// console.log(token , "in cart");
 
-const url = "https://ecommerce-backend-ecru-mu.vercel.app/products"
+// const url = "https://ecommerce-backend-ecru-mu.vercel.app/products"
 
 export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
- 
+  
+  
+  let token = await localStorage.getItem('token');
   const res = await axios.post(`${url}/cart`, product, {
     headers: {
       token: token
@@ -26,6 +27,7 @@ export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
 });
 
 export const getCart = createAsyncThunk('cart/getCart', async () => {
+  let token = await localStorage.getItem('token');
   const res = await axios.get(`${url}/cart`, {
     headers: {
       token: token
@@ -39,6 +41,7 @@ export const getCart = createAsyncThunk('cart/getCart', async () => {
 
 
 export const decreaseQuantity =createAsyncThunk('/cart/decrease' , async(product)=>{
+  let token = await localStorage.getItem('token');
   const res = await axios.put(`${url}/cart/decrease`, product,{
     headers: {
       token: token
@@ -51,14 +54,15 @@ export const decreaseQuantity =createAsyncThunk('/cart/decrease' , async(product
 
 
 export const deleteItemFromCart = createAsyncThunk('/cart/delete' , async(product)=>{
-
+  let token = await localStorage.getItem('token');
+  
   console.log(product);
-
+  
   const res = await axios.delete(`${url}/cart/delete`,{
     headers: {
       token: token
     },
-
+    
     data: { productId: product.productId, size: product.size }
   });
   console.log(res.data);
@@ -69,13 +73,13 @@ function calculatePrice(arr) {
   if (!arr) {
     return;
   } else {
-
-console.log("arr" , arr);
-
-  
+    
+    console.log("arr" , arr);
+    
+    
     const priceForItems = arr.reduce((acc, item) => {
-
-return acc + (item.productId.price * item.quantity)}, 0);
+      
+      return acc + (item.productId.price * item.quantity)}, 0);
 
     let totalPrice = 0;
     let packagingFee = 59;
@@ -115,6 +119,7 @@ export const cartSlice = createSlice({
     builder.addCase(addToCart.fulfilled, (state, action) => {
       
       state.priceDetails = calculatePrice(state.items);
+      console.log(state.priceDetails);
       state.loading = false;
       state.error = "";
     });
@@ -131,7 +136,8 @@ export const cartSlice = createSlice({
 
     builder.addCase(getCart.fulfilled, (state, action) => {
       state.items = action.payload;
-      state.priceDetails = calculatePrice(state.items);
+      state.priceDetails = calculatePrice(state.items);      
+      console.log(state.priceDetails);
       state.loading = false;
       state.error = "";
     });
@@ -147,7 +153,7 @@ export const cartSlice = createSlice({
 
     builder.addCase(decreaseQuantity.fulfilled , (state,action)=>{
       
-      state.priceDetails = calculatePrice(state.items);
+      state.priceDetails = calculatePrice(state.items);      console.log(state.priceDetails);
       state.loading = false
       state.error = ""
     });
@@ -164,7 +170,8 @@ export const cartSlice = createSlice({
 
     
     builder.addCase(deleteItemFromCart.fulfilled , (state,action)=>{
-      state.priceDetails = calculatePrice(state.items);
+      state.priceDetails = calculatePrice(state.items);      console.log(state.priceDetails);
+  
       state.loading = true
       state.error = ""
     });
