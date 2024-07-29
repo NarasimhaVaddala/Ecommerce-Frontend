@@ -1,4 +1,4 @@
-import React , { useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, decreaseQuantity, deleteItemFromCart, getCart } from "../features/cart/cartSlice";
 import { addToWishlist as addwish, getWishlist } from "../features/wishlist/wishSlice";
@@ -13,31 +13,31 @@ import { Link } from "react-router-dom";
 
 //Main Page Starts Here
 export default function CartPage() {
-  const items = useSelector((state) => state.cart.items); 
+  const items = useSelector((state) => state.cart.items);
   const dispatch = useDispatch()
-  const {setLoading , loading} = useContext(UserContext)
-  
-useEffect(()=>{
+  const { setLoading, loading } = useContext(UserContext)
 
-  (
-    async function(){
-      setLoading(true)
-      await dispatch(getCart())
-      setLoading(false)
+  useEffect(() => {
 
-    }
-  )()
-},[])
+    (
+      async function () {
+        setLoading(true)
+        await dispatch(getCart())
+        setLoading(false)
 
-               
-  console.log("cartpage" , items);
+      }
+    )()
+  }, [])
+
+
+  console.log("cartpage", items);
   return (
     <>
       {items.length && !loading ? (
         <div className="container grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Addressbox />
           <div className="lg:col-span-2 flex flex-col gap-6">
-            {items && items.map(e=><Cartcard key={e._id} obj={e}/>)}
+            {items && items.map(e => <Cartcard key={e._id} obj={e} />)}
           </div>
           <Pricebox noOfItems={items.length} />
         </div>
@@ -53,10 +53,22 @@ useEffect(()=>{
 
 
 // PriceBox Starts Here
-function Pricebox(props) {  
-  const priceDetails = useSelector((state) => state.cart.priceDetails);  
+function Pricebox(props) {
+  const priceDetails = useSelector((state) => state.cart.priceDetails);
 
-  
+  const address = useSelector((state) => state.user.address);
+
+  function buyNow() {
+    if (!address.name || !address.mobile || !address.pincode || !address.addr) {
+      alert("Please add Delivery Address")
+    }
+    else {
+
+      alert("Done")
+    }
+  }
+
+
 
   return (
     <div className="bg-white p-4 sticky top-4 lg:col-start-3 lg:row-start-1">
@@ -68,17 +80,17 @@ function Pricebox(props) {
       </p>
       <p className="flex justify-between mb-1 text-lg">
         <span>Delivery Charges</span>
-        {priceDetails.deliveryCharges? <span>{priceDetails.deliveryCharges}/-</span> : <span>Free Delivery</span>}
+        {priceDetails.deliveryCharges ? <span>{priceDetails.deliveryCharges}/-</span> : <span>Free Delivery</span>}
       </p>
       <p className="flex justify-between mb-1 text-lg">
         <span>Packaging Fee</span>
         <span>{priceDetails.packagingFee}/-</span>
       </p>
       <p className="flex justify-between mb-1 text-lg font-bold">
-        <span>Total Amount</span> 
+        <span>Total Amount</span>
         <span>{priceDetails.totalPrice}/-</span>
       </p>
-      <button className="transition-all ease-in-out duration-300 bg-black border text-white py-2 px-4 rounded flex items-center justify-center hover:bg-white hover:text-black hover:border-black hover:border-[1px] w-full">
+      <button onClick={buyNow} className="transition-all ease-in-out duration-300 bg-black border text-white py-2 px-4 rounded flex items-center justify-center hover:bg-white hover:text-black hover:border-black hover:border-[1px] w-full">
         Buy Now
       </button>
     </div>
@@ -114,6 +126,7 @@ const Addressbox = React.memo(() => {
 
   return (
     <div className="bg-white p-4 flex flex-col justify-between lg:col-span-2 lg:row-auto lg:mb-0">
+{(add.name && add.mobile && add.addr && add.pincode)&&
       <div>
         <h2 className="text-lg mb-1 font-bold">
           Deliver To {add.name} | +91 {add.mobile}
@@ -122,13 +135,14 @@ const Addressbox = React.memo(() => {
           {add.addr}
         </p>
         <p className="text-lg">{add.pincode}</p>
-      </div>
+      </div>}
+
       <Link to='/profile/account'
-      className="transition-all 
+        className="transition-all 
       ease-in-out duration-300 border border-green-600 
       text-green-600 py-2 px-4 rounded flex items-center justify-center
        hover:bg-green-500 hover:text-white font-bold">
-        Edit or Change Address
+        {(!add.name || !add.mobile || !add.addr || !add.pincode)?<span>Add Delivery Address</span>: <span>Edit or change Address</span>}
       </Link>
     </div>
   );
@@ -144,35 +158,35 @@ function Cartcard(props) {
   const { obj } = props;
   const [qty, setqty] = useState(obj.quantity); // initialize with obj.qty
   const dispatch = useDispatch();
-  const { loading , setLoading} = useContext(UserContext)
+  const { loading, setLoading } = useContext(UserContext)
 
-  const wishlist = async() => {
-  
-    await dispatch(addwish(obj.productId._id));  
-   
+  const wishlist = async () => {
+
+    await dispatch(addwish(obj.productId._id));
+
     toast.info("Added to Wishlist");
   };
 
-  const increase = async() => {
+  const increase = async () => {
 
     if (obj.quantity >= 5) toast.error("Cannot add More Than 5 quantity")
-      else{
+    else {
       setLoading(true)
-      await dispatch(addToCart({productId:obj.productId._id , quantity:1 , size:obj.size }));
-      await dispatch(getCart())       
-       setqty(prevQty => {        
-         const newQty = prevQty < 5 ? prevQty + 1 : prevQty;      
+      await dispatch(addToCart({ productId: obj.productId._id, quantity: 1, size: obj.size }));
+      await dispatch(getCart())
+      setqty(prevQty => {
+        const newQty = prevQty < 5 ? prevQty + 1 : prevQty;
         return newQty;
       });
       setLoading(false)
-    }  
+    }
   };
 
-  const decrease = async() => {
+  const decrease = async () => {
     setLoading(true)
-    await dispatch(decreaseQuantity({productId: obj.productId._id , size:obj.size }));
+    await dispatch(decreaseQuantity({ productId: obj.productId._id, size: obj.size }));
     await dispatch(getCart())
- setqty(prevQty => {
+    setqty(prevQty => {
       const newQty = prevQty > 1 ? prevQty - 1 : prevQty;
       return newQty;
     });
@@ -180,10 +194,10 @@ function Cartcard(props) {
   };
 
 
-  const deleteCart = async()=>{
+  const deleteCart = async () => {
     setLoading(true)
-     await dispatch(deleteItemFromCart({productId: obj.productId._id , size:obj.size }))
-     await dispatch(getCart())
+    await dispatch(deleteItemFromCart({ productId: obj.productId._id, size: obj.size }))
+    await dispatch(getCart())
     setLoading(false)
   }
 
@@ -194,31 +208,31 @@ function Cartcard(props) {
       </div>
       <div className="ml-4 w-full">
         <div className="flex justify-between items-center w-full">
-            <h3 className="font-bold">{obj.productId.name}</h3>
-            <div className="flex justify-start gap-x-4 items-center my-1">
-              <button onClick={deleteCart} className="text-sm">
-                <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
-              </button>
-              <span>|</span>
-              <button className="text-sm" onClick={wishlist}>
-                <i className="fa-regular fa-heart transition-all linear duration-100 hover:scale-105 hover:text-red-600"></i>
-              </button>
-              <ToastContainer />
-            </div>
+          <h3 className="font-bold">{obj.productId.name}</h3>
+          <div className="flex justify-start gap-x-4 items-center my-1">
+            <button onClick={deleteCart} className="text-sm">
+              <i className="fa-regular fa-trash-can transition-all linear duration-100 hover:scale-105"></i>
+            </button>
+            <span>|</span>
+            <button className="text-sm" onClick={wishlist}>
+              <i className="fa-regular fa-heart transition-all linear duration-100 hover:scale-105 hover:text-red-600"></i>
+            </button>
+            <ToastContainer />
+          </div>
         </div>
         <p>Size : {obj.size}</p>
         {/* Buttons for Increasing or Decreasing the quantity of the product */}
         <div className="flex justify-start gap-x-4 items-center my-1">
 
-        <span>Qty</span>
+          <span>Qty</span>
 
           <button className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full" onClick={decrease}>-</button>
           <span>{qty}</span>
-          <button disabled={qty==5} className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full disabled:border-gray-500" onClick={increase}>+</button>
+          <button disabled={qty == 5} className="border-[1px] flex items-center justify-center border-black h-4 w-4 rounded-full disabled:border-gray-500" onClick={increase}>+</button>
         </div>
         {/* Buttons for Increasing or Decreasing the quantity of the product */}
         <p className="font-bold">₹ {obj.productId.price * qty}/-</p>
-        
+
       </div>
     </div>
   );
