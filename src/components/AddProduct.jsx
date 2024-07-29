@@ -37,7 +37,7 @@ export default function AddProduct() {
 
   async function postData(obj)
   {
-    axios.post(`https://ecommerce-backend-ecru-mu.vercel.app/products/insert` , obj)
+    axios.post(`http://localhost:3000/products/insert` , obj)
     .then(res=>toast.success("Product Added Successfully")).catch(e=>toast.error(e.message))
   }
 

@@ -4,57 +4,70 @@ import axios from "axios";
 
 const initialState = {
     orders:[],
-    address:[],
+    details:{
+        first_name:"",
+        last_name:"",
+        email:"",
+        mobile:""
+    },
+    address:{
+        name:"",
+        addr:"",
+        mobile:"",
+        pincode:""
+    },
     loading:false,
     error:'',
 } 
 
 
-const url = 'http://localhost:3000'
+const url = 'http://localhost:3000/user'
 
 export const getDetails = createAsyncThunk('getdetails' , async()=>{
-    const token = localStorage.getItem('token')
-    const res = await axios.get(`${url}/getuserdata` ,{
+    const token = await localStorage.getItem('token')
+    const res = await axios.get(`${url}/getuser` ,{
+        headers :{
+            token:token
+        }
+    })
+    return res.data.data;
+})
+
+
+export const editDetails = createAsyncThunk('editdetails' , async(details)=>{
+    const token = await localStorage.getItem('token')
+    const res = await axios.put(`${url}/edituser` ,details,{
         headers :{
             token:token
         }
     })
 
-    return res.data;
-})
-export const editDetails = createAsyncThunk('addAddress' , async(details)=>{
-    const token = localStorage.getItem('token')
-    const res = await axios.post(`${url}/address` ,details,{
-        headers :{
-            token:token
-        }
-    })
-
-    return res.data;
+    console.log(res.data.data , "from userslice");
+    return res.data.data;
 })
 
 
-export const placeOrder = createAsyncThunk('placeOrder' , async(order)=>{
-    const token = localStorage.getItem('token')
-    const res = await axios.post(`${url}/placeorder` ,order,{
-        headers :{
-            token:token
-        }
-    })
 
-    return res.data;
-})
+
+
+
 
 export const userSlice = createSlice({
     initialState,
+    name:"user",
+    reducers:{},
 
 
 extraReducers:(builder)=>{
 
 
         builder.addCase(getDetails.fulfilled , (state,action)=>{
-            state.orders = action.payload.orders;
-            state.address = action.payload.address;
+            // console.log(action.payload, " from fulfilled");
+            const {first_name , last_name , email , mobile , address} = action.payload;
+            state.address = address;
+            state.details = {first_name , last_name , email , mobile};
+
+            console.log(state.address , state.details);
             state.loading = false
         
         })
@@ -67,33 +80,28 @@ extraReducers:(builder)=>{
         })
 
 
-        builder.addCase(addAddress.fulfilled , (state,action)=>{
-            // state.orders = action.payload.orders;
-            // state.address = action.payload.address;
+        builder.addCase(editDetails.fulfilled , (state,action)=>{
+            // state.details = action.payload;
             state.loading = false
         
         })
-        builder.addCase(addAddress.pending , (state,action)=>{
+        builder.addCase(editDetails.pending , (state,action)=>{
                     state.loading = true
         })
-        builder.addCase(addAddress.rejected , (state,action)=>{
+        builder.addCase(editDetails.rejected , (state,action)=>{
             state.loading = false
             state.error = action.error.message
         })
 
-        builder.addCase(placeOrder.fulfilled , (state,action)=>{
-            state.orders = action.payload.orders;;
-            state.loading = false
-        
-        })
-        builder.addCase(placeOrder.pending , (state,action)=>{
-                    state.loading = true
-        })
-        builder.addCase(placeOrder.rejected , (state,action)=>{
-            state.loading = false
-            state.error = action.error.message
-        })
+
+     
+
+       
 }
 
 
 })
+
+
+
+export default userSlice.reducer;

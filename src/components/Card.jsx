@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { addToWishlist as add } from "../features/wishlist/wishSlice";
+import { addToWishlist as addwish} from "../features/wishlist/wishSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-const token = localStorage.getItem('token')
+
+import UserContext from "../app/context";
+// const token = localStorage.getItem('token')
+
+console.log("card redner")
+
 
 
 export default function Card({ obj })
  {
   const dispatch = useDispatch();
   const navigate = useNavigate()
+  const {loading, setLoading, isAuthenticated} = useContext(UserContext)
 
   const addtoWishlist = async() => {
-    if (!token)return navigate('/login')   
-    await dispatch(add(obj._id))
+    // console.log(isAuthenticated);
+    if (!isAuthenticated)return navigate('/login')  
+    setLoading(true) 
+    await dispatch(addwish(obj._id))
+    setLoading(false)
     toast.success("Added To Wishlist");
   };
 
@@ -32,7 +41,8 @@ export default function Card({ obj })
 
 
         <p className="font-bold px-1 mt-2 flex justify-between text-lg">
-            <Link to={`/product/${obj._id}`}>{obj.name}</Link> <i className="fa-regular fa-heart hover:text-red-600 hover:scale-110" onClick={addtoWishlist}/>
+            <Link to={`/product/${obj._id}`}>{obj.name}</Link> 
+            <i className="fa-regular fa-heart hover:text-red-600 hover:scale-110" onClick={addtoWishlist}/>
         </p>
       
       <p className="font-semibold text-slate-600 px-1">by {obj.brand}</p>

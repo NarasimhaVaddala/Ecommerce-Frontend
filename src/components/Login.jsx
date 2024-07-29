@@ -50,7 +50,7 @@ export default function Login() {
   };
 
   return (
-    <div className='container flex flex-col gap-4 w-full md:w-96 mx-auto my-4'>
+    <div className='container flex flex-col gap-4 w-full md:w-[40rem] mx-auto my-4'>
       <h1 className='mt-1 text-3xl font-bold text-blue-800'>Login</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='my-1'>

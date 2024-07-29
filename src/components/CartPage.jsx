@@ -4,6 +4,8 @@ import { addToCart, decreaseQuantity, deleteItemFromCart, getCart } from "../fea
 import { addToWishlist as addwish, getWishlist } from "../features/wishlist/wishSlice";
 import { toast, ToastContainer } from "react-toastify";
 import UserContext from "../app/context";
+import { getDetails } from "../features/user/userSlice";
+import { Link } from "react-router-dom";
 
 
 
@@ -88,24 +90,51 @@ function Pricebox(props) {
 
 
 // Address Box Starts here
-function Addressbox() {
+const Addressbox = React.memo(() => {
+  const address = useSelector((state) => state.user.address);
+  const dispatch = useDispatch();
+
+  const [add, setAdd] = useState({ name: "", mobile: "", addr: "", pincode: "" });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getDetails());
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (address) {
+      setAdd({ ...address });
+    }
+  }, [address]);
+
+  console.log(address);
+
   return (
     <div className="bg-white p-4 flex flex-col justify-between lg:col-span-2 lg:row-auto lg:mb-0">
       <div>
         <h2 className="text-lg mb-1 font-bold">
-          Deliver To Narasimha | +91 8978106223
+          Deliver To {add.name} | +91 {add.mobile}
         </h2>
         <p className="text-lg">
-          Plot Number 474 HMT Swarnapuri Colony, Miyapur, Hyderabad, Telangana
+          {add.addr}
         </p>
-        <p className="text-lg">500049</p>
+        <p className="text-lg">{add.pincode}</p>
       </div>
-      <button className=" transition-all ease-in-out duration-300 border border-green-600 text-green-600 py-2 px-4 rounded flex items-center justify-center hover:bg-green-500 hover:text-white font-bold">
+      <Link to='/profile/account'
+      className="transition-all 
+      ease-in-out duration-300 border border-green-600 
+      text-green-600 py-2 px-4 rounded flex items-center justify-center
+       hover:bg-green-500 hover:text-white font-bold">
         Edit or Change Address
-      </button>
+      </Link>
     </div>
   );
-}
+});
+
+
 // Address Box Starts here
 
 
