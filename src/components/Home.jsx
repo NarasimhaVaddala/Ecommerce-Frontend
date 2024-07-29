@@ -118,9 +118,7 @@ function Homecard({ price, img, category, url, brand, name }){
 
   return (
     <div
-      className={`flex flex-col mt-4 md:h-96  hover:cursor-pointer transition ease-in-out duration-300 ${
-        !category && "lg:shadow-xl"
-      } ${!category && "md:h-[auto]"}`}
+      className={`flex flex-col mt-4  hover:cursor-pointer transition ease-in-out duration-300 `}
     >
       <div className="h-[95%] shadow-lg">
         <Link to={`${url}`}>

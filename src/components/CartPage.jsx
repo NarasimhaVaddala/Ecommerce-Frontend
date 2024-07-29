@@ -29,8 +29,6 @@ export default function CartPage() {
     )()
   }, [])
 
-
-  console.log("cartpage", items);
   return (
     <>
       {items.length && !loading ? (
