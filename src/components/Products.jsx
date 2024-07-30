@@ -36,7 +36,7 @@ getData()
           </div>
       {/* Here The entire objects are sent as prop to ensure readability and reducing number of lines of code */}
           <div className="mx-auto row-span-4 grid grid-cols-2 lg:grid-cols-3 lg:col-start-2 lg:col-end-5 gap-4">        
-            {items.length<1?<p className="text-center font-bold text-xl">No Products Available</p> :items.map(e=> <Card obj={e}  key={e._id}  /> )}
+            {items.length<1?<p className="w-full font-bold text-xl text-center col-span-5">No Products Available</p> :items.map(e=> <Card obj={e}  key={e._id}  /> )}
           </div>
     </div>
     </section>

@@ -41,9 +41,36 @@ export const editDetails = createAsyncThunk('editdetails' , async(details)=>{
             token:token
         }
     })
-
-    console.log(res.data.data , "from userslice");
+    
+    // console.log(res.data.data , "from userslice");
     return res.data.data;
+})
+
+
+
+export const placeOrder = createAsyncThunk('placeorder' , async(order)=>{
+    const token = await localStorage.getItem('token')
+    const res = await axios.post(`${url}/order`,order ,{
+        headers :{
+            token:token
+        }
+    })
+    
+    // console.log(res.data.data , "from userslice");
+    return res.data.data;
+
+})
+export const getOrder = createAsyncThunk('getorder' , async()=>{
+    const token = await localStorage.getItem('token')
+    const res = await axios.get(`${url}/order` ,{
+        headers :{
+            token:token
+        }
+    })
+    
+    // console.log(res.data.data , "from userslice");
+    return res.data.data;
+
 })
 
 
@@ -67,7 +94,7 @@ extraReducers:(builder)=>{
             state.address = address;
             state.details = {first_name , last_name , email , mobile};
 
-            console.log(state.address , state.details);
+            // console.log(state.address , state.details);
             state.loading = false
         
         })
@@ -89,6 +116,37 @@ extraReducers:(builder)=>{
                     state.loading = true
         })
         builder.addCase(editDetails.rejected , (state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+
+
+
+        builder.addCase(placeOrder.fulfilled , (state,action)=>{
+            // state.details = action.payload;
+            state.loading = false
+        
+        })
+        builder.addCase(placeOrder.pending , (state,action)=>{
+                    state.loading = true
+        })
+        builder.addCase(placeOrder.rejected , (state,action)=>{
+            state.loading = false
+            state.error = action.error.message
+        })
+
+
+
+
+        builder.addCase(getOrder.fulfilled , (state,action)=>{
+            state.orders = action.payload;
+            state.loading = false
+        
+        })
+        builder.addCase(getOrder.pending , (state,action)=>{
+                    state.loading = true
+        })
+        builder.addCase(getOrder.rejected , (state,action)=>{
             state.loading = false
             state.error = action.error.message
         })

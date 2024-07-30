@@ -4,8 +4,8 @@ import { addToCart, decreaseQuantity, deleteItemFromCart, getCart } from "../fea
 import { addToWishlist as addwish, getWishlist } from "../features/wishlist/wishSlice";
 import { toast, ToastContainer } from "react-toastify";
 import UserContext from "../app/context";
-import { getDetails } from "../features/user/userSlice";
-import { Link } from "react-router-dom";
+import { getDetails, placeOrder } from "../features/user/userSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -40,7 +40,7 @@ export default function CartPage() {
           <Pricebox noOfItems={items.length} />
         </div>
       ) : (
-        <h2 className="h-[80vh] flex items-center justify-center font-bold">
+        <h2 className="h-[80vh] flex items-center justify-center font-bold text-3xl">
           No Items in Cart Go and add Items to Proceed
         </h2>
       )}
@@ -53,16 +53,20 @@ export default function CartPage() {
 // PriceBox Starts Here
 function Pricebox(props) {
   const priceDetails = useSelector((state) => state.cart.priceDetails);
+  const address = useSelector((state) => state.user.address);  
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  
 
-  const address = useSelector((state) => state.user.address);
+  async function buyNow() {
 
-  function buyNow() {
     if (!address.name || !address.mobile || !address.pincode || !address.addr) {
       alert("Please add Delivery Address")
     }
     else {
 
-      alert("Done")
+      await dispatch(placeOrder("order"))
+      return navigate('/profile')
     }
   }
 
@@ -120,7 +124,7 @@ const Addressbox = React.memo(() => {
     }
   }, [address]);
 
-  console.log(address);
+  // console.log(address);
 
   return (
     <div className="bg-white p-4 flex flex-col justify-between lg:col-span-2 lg:row-auto lg:mb-0">
@@ -145,8 +149,6 @@ const Addressbox = React.memo(() => {
     </div>
   );
 });
-
-
 // Address Box Starts here
 
 
@@ -159,15 +161,12 @@ function Cartcard(props) {
   const { loading, setLoading } = useContext(UserContext)
 
   const wishlist = async () => {
-
     await dispatch(addwish(obj.productId._id));
-
     toast.info("Added to Wishlist");
   };
 
   const increase = async () => {
-
-    if (obj.quantity >= 5) toast.error("Cannot add More Than 5 quantity")
+    if (obj.quantity >= 5)return toast.error("Cannot add More Than 5 quantity")
     else {
       setLoading(true)
       await dispatch(addToCart({ productId: obj.productId._id, quantity: 1, size: obj.size }));
@@ -237,3 +236,7 @@ function Cartcard(props) {
 }
 //Card Ends Here
 
+
+
+
+//order Functionality

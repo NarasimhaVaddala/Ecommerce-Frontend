@@ -33,7 +33,7 @@ export const getCart = createAsyncThunk('cart/getCart', async () => {
       token: token
     }
   });
-  console.log("cart here", res.data.cart);
+  // console.log("cart here", res.data.cart);
   return res.data.cart;
 });
 
@@ -47,7 +47,7 @@ export const decreaseQuantity =createAsyncThunk('/cart/decrease' , async(product
       token: token
     }
   });
-  console.log(res.data);
+  // console.log(res.data);
   return res.data;
 })
 
@@ -65,7 +65,7 @@ export const deleteItemFromCart = createAsyncThunk('/cart/delete' , async(produc
     
     data: { productId: product.productId, size: product.size }
   });
-  console.log(res.data);
+  // console.log(res.data);
   return res.data;
 })
 
@@ -74,7 +74,7 @@ function calculatePrice(arr) {
     return;
   } else {
     
-    console.log("arr" , arr);
+    // console.log("arr" , arr);
     
     
     const priceForItems = arr.reduce((acc, item) => {
@@ -88,12 +88,12 @@ function calculatePrice(arr) {
     if (priceForItems >= 499) {
       deliveryCharges = 0;
       totalPrice = priceForItems + packagingFee + deliveryCharges;
-      console.log(totalPrice, priceForItems, packagingFee, deliveryCharges);
+      // console.log(totalPrice, priceForItems, packagingFee, deliveryCharges);
       return { totalPrice, priceForItems, packagingFee, deliveryCharges };
     } else {
       deliveryCharges = 49;
       totalPrice = priceForItems + packagingFee + deliveryCharges;
-      console.log(totalPrice, priceForItems, packagingFee, deliveryCharges);
+      // console.log(totalPrice, priceForItems, packagingFee, deliveryCharges);
       return { totalPrice, priceForItems, packagingFee, deliveryCharges };
     }
   }
@@ -137,7 +137,7 @@ export const cartSlice = createSlice({
     builder.addCase(getCart.fulfilled, (state, action) => {
       state.items = action.payload;
       state.priceDetails = calculatePrice(state.items);      
-      console.log(state.priceDetails);
+      // console.log(state.priceDetails);
       state.loading = false;
       state.error = "";
     });

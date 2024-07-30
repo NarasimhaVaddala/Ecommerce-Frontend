@@ -3,7 +3,7 @@ import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { delWishlist as delwish, getWishlist } from "../features/wishlist/wishSlice";
 import UserContext from "../app/context";
-import { editDetails, getDetails } from "../features/user/userSlice";
+import { editDetails, getDetails, getOrder } from "../features/user/userSlice";
 import { useForm } from "react-hook-form";
 export default function Profile() {
   const navigate = useNavigate();
@@ -48,10 +48,38 @@ export default function Profile() {
 }
 
 function Orders() {
+
+  const data = useSelector((state)=>state.user.orders)
+
+  const [order,setOrder] = useState([]) 
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(getOrder());
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    if (data) {
+      setOrder(data)
+      // console.log(order);
+    }
+    
+  }, [data]);
+  
   return (
     <>
       <h2 className="text-2xl my-1">Orders</h2>
       <hr className="mb-4" />
+
+      {
+        order.map((e)=>{
+          return <OrderDiv items={e.items} key={e._id} status={e.status} id={e._id} />
+        })
+      }
 
 
     </>
@@ -237,14 +265,9 @@ function Orders() {
 
 
 function Cartcard({ obj }) {
-
-
   useEffect(() => {
     dispatch(getWishlist())
   }, [])
-
-
-
   const dispatch = useDispatch()
 
   const delWish = async () => {
@@ -311,9 +334,7 @@ function BottomCard() {
       <Link to="wishlist">
         <i className="fa-regular fa-heart text-2xl p-4"></i>
       </Link>
-      <Link to="address">
-        <i className="fa-regular fa-address-book text-2xl p-4"></i>
-      </Link>
+     
     </div>
   );
 }
@@ -354,12 +375,12 @@ function Account() {
     <div>
       <div className="flex justify-between">
         
-      <h2 className="text-xl font-bold">Personal Details</h2>
+      <h2 className="text-xl font-bold">Account Details</h2>
       {editing && <button className="mt-4 p-2 bg-blue-500 text-white" onClick={()=>setediting(false)}>Edit</button>}
       {!editing && <button className="mt-4 p-2 bg-blue-500 text-white" onClick={handleSave}>save</button>}
       
       </div>
-      <div className="flex w-full gap-2 mt-4 flex-wrap md:flex-nowrap">
+      <div className="flex w-full gap-2 flex-wrap md:flex-nowrap">
         <input
           type="text"
           className="border-[1px] border-black w-full my-2 p-4 md:p-2"
@@ -397,7 +418,7 @@ function Account() {
         />
       </div>
 
-      <h2 className="text-xl font-bold mt-4">Address</h2>
+      <h2 className="text-xl font-bold mt-4">Delivery Address</h2>
       <div className="mt-2">
         <input
           type="text"
@@ -434,3 +455,55 @@ function Account() {
     </div>
   );
 }
+
+
+function OrderDiv({items, status}){
+  
+  return(
+   <div className="mb-3 border-[1px] border-black p-2">
+
+      <p className="text-xl">Status : {status}</p>
+      <p className="text-xl">Expected Delivery : 3 Days</p>
+
+   
+      {
+        items.map((e)=>{
+          return <OrderCard obj={e} key={e._id}/>
+        })
+      }
+   
+      </div>
+   
+  )
+}
+
+
+function OrderCard({obj}){
+
+  
+  
+return(
+  <div className="flex border-[1px] p-2 mb-1 gap-4">
+
+      <div className="cartimg flex h-28 w-28">
+        <Link to={`/product/${obj.productId._id}`} className="h-[100%] w-[100%]">
+          <img src={obj.productId.image} alt="Image" className="h-[100%] w-[100%]" />
+        </Link>
+      </div>
+
+      <div className="content w-full">
+        <div className="flex justify-between w-full">
+          <Link to={`/product/${obj.productId._id}`}>
+            <h3 className="text-xl font-bold">{obj.productId.name}</h3>
+          </Link>
+         
+
+        </div>
+
+        <p className="text-slate-800">by {obj.productId.brand}</p>
+        <p className="text-slate-800">{obj.description}</p>
+        <h3 className="text-slate-800 text-xl font-bold">{obj.productId.price}</h3>
+      </div>
+    </div>
+)
+} 
