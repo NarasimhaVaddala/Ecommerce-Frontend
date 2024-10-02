@@ -21,7 +21,8 @@ const initialState = {
 } 
 
 
-const url = 'http://localhost:3000/user'
+//const url = 'http://localhost:3000/user'
+ const url = `https://ecommerce-backend-ecru-mu.vercel.app/user`;
 
 export const getDetails = createAsyncThunk('getdetails' , async()=>{
     const token = await localStorage.getItem('token')
