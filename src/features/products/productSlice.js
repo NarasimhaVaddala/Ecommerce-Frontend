@@ -4,8 +4,8 @@ import axios from "axios";
 
 
 
-const url = `http://localhost:3000/products`
-// const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`
+//const url = `http://localhost:3000/products`
+ const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`
 
 
 export const getProducts = createAsyncThunk('getProducts' , async({gender , category,type})=>{  
