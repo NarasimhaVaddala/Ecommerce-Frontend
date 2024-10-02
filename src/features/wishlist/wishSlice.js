@@ -8,8 +8,8 @@ const initialState = {
   error: ""
 };
 
-const url = `http://localhost:3000/products`;
-// const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
+//const url = `http://localhost:3000/products`;
+ const url = `https://ecommerce-backend-ecru-mu.vercel.app/products`;
 
 export const addToWishlist = createAsyncThunk('/wishlist/add', async (productId) => {
   let token = await localStorage.getItem('token');
